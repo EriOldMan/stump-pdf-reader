@@ -19,23 +19,29 @@ const linkType = z
 export const isLegacyNavigationLink = (link: OPDSLegacyLink) =>
 	link.type === 'application/atom+xml;profile=opds-catalog;kind=navigation'
 
+export const isSubsectionLink = (link: OPDSLegacyLink) => link.rel === 'subsection'
+
 export const isLegacyDownloadableLink = (link: OPDSLegacyLink) =>
 	link.rel === 'http://opds-spec.org/acquisition'
 
-const linkRel = z.enum([
-	'self',
-	'subsection',
-	'http://opds-spec.org/acquisition', // acquisition
-	'start',
-	'next',
-	'previous',
-	'http://opds-spec.org/image', // image
-	'http://opds-spec.org/image/thumbnail', // thumbnail
-	'http://vaemendis.net/opds-pse/stream', // PSE stream
-	'search',
-	'alternate', // e.g., link for different OPDS feed or version
-	'http://opds-spec.org/acquisition/open-access', // open access acquisition
-])
+const linkRel = z
+	.enum([
+		'self',
+		'subsection',
+		'http://opds-spec.org/acquisition', // acquisition
+		'start',
+		'next',
+		'previous',
+		'http://opds-spec.org/image', // image
+		'http://opds-spec.org/image/thumbnail', // thumbnail
+		'http://vaemendis.net/opds-pse/stream', // PSE stream
+		'search',
+		'alternate', // e.g., link for different OPDS feed or version
+		'http://opds-spec.org/acquisition/open-access', // open access acquisition
+		// TODO(opds): handle auth links like v2.0?
+		'http://opds-spec.org/auth/document', // auth document (for now ignored for v1.2)
+	])
+	.or(z.string()) // no real need to be stricter here
 
 export const isPseStreamLink = (link: OPDSLegacyLink) =>
 	link.rel === 'http://vaemendis.net/opds-pse/stream'

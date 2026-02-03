@@ -1,6 +1,6 @@
 import { isAxiosError } from 'axios'
 import { useRouter } from 'expo-router'
-import { Linking, View } from 'react-native'
+import { Linking, ScrollView, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { ZodError } from 'zod'
 
@@ -24,7 +24,7 @@ export default function MaybeErrorLegacyFeed({ error, onRetry }: Props) {
 	const errorTitle = error instanceof ZodError ? 'Invalid Feed' : 'Error Loading Feed'
 	const errorMessage =
 		error instanceof ZodError
-			? `This feed does not adhere to the OPDS v1.2 specification. It contains ${error.issues.length} issue${error.issues.length !== 1 ? 's' : ''} that need to be resolved`
+			? `This feed does not adhere to the OPDS v1.2 specification: ${error.message}`
 			: error instanceof Error && error.message
 				? error.message
 				: 'There was an error fetching this feed.'
@@ -40,9 +40,11 @@ export default function MaybeErrorLegacyFeed({ error, onRetry }: Props) {
 							{errorTitle}
 						</Heading>
 
-						<Text size="lg" className="text-center">
-							{errorMessage}
-						</Text>
+						<ScrollView showsVerticalScrollIndicator={false} style={{ maxHeight: 200 }}>
+							<Text size="lg" className="text-center">
+								{errorMessage}
+							</Text>
+						</ScrollView>
 					</View>
 				</View>
 

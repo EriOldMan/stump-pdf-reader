@@ -5,8 +5,11 @@ import { View } from 'react-native'
 
 import ChevronBackLink from '~/components/ChevronBackLink'
 import EmptyState from '~/components/EmptyState'
-import { MaybeErrorFeed } from '~/components/opds'
-import { OPDSLegacyEntryItem, OPDSLegacyFeedActionMenu } from '~/components/opdsLegacy'
+import {
+	MaybeErrorLegacyFeed,
+	OPDSLegacyEntryItem,
+	OPDSLegacyFeedActionMenu,
+} from '~/components/opdsLegacy'
 import { useLegacyOPDSEntrySize } from '~/components/opdsLegacy/useLegacyOPDSEntrySize'
 import RefreshControl from '~/components/RefreshControl'
 import { FullScreenLoader } from '~/components/ui'
@@ -54,7 +57,7 @@ export default function Screen() {
 
 	if (isLoading) return null
 
-	if (!feed || !!error) return <MaybeErrorFeed error={error} onRetry={onRefetch} />
+	if (!feed || !!error) return <MaybeErrorLegacyFeed error={error} onRetry={onRefetch} />
 
 	if (!entries.length) {
 		return <EmptyState title="Empty Feed" message="Your search returned no results" />

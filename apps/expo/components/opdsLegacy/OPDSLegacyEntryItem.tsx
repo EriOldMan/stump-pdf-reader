@@ -1,6 +1,11 @@
 import { TrueSheet } from '@lodev09/react-native-true-sheet'
 import { useSDK } from '@stump/client'
-import { isLegacyDownloadableLink, isLegacyNavigationLink, OPDSLegacyEntry } from '@stump/sdk'
+import {
+	isLegacyDownloadableLink,
+	isLegacyNavigationLink,
+	isSubsectionLink,
+	OPDSLegacyEntry,
+} from '@stump/sdk'
 import { useRouter } from 'expo-router'
 import { Download, Info, Radio, Trash } from 'lucide-react-native'
 import { useRef } from 'react'
@@ -44,6 +49,7 @@ export default function OPDSEntry({ entry }: Props) {
 	const layout = useOPDSPreferencesStore((state) => state.layout)
 
 	const navigateUrl = entry.links.find(isLegacyNavigationLink)?.href || ''
+	const subsectionUrl = entry.links.find(isSubsectionLink)?.href || ''
 	const downloadLink = entry.links.find(isLegacyDownloadableLink)
 	const thumbnailUrl = entry.links.find(
 		(link) => link.rel === 'http://opds-spec.org/image/thumbnail',
@@ -57,15 +63,8 @@ export default function OPDSEntry({ entry }: Props) {
 	const resolveUrl = useResolveURL()
 
 	const onPress = () => {
-		if (navigateUrl) {
-			router.push({
-				pathname: `/opds-legacy/[id]/feed/[url]`,
-				params: {
-					id: serverID,
-					url: navigateUrl,
-				},
-			})
-		} else if (streamingContext) {
+		const toUrl = navigateUrl || subsectionUrl
+		if (streamingContext) {
 			router.push({
 				pathname: `/opds-legacy/[id]/read`,
 				params: {
@@ -75,6 +74,14 @@ export default function OPDSEntry({ entry }: Props) {
 					entryContent: entry.content,
 					streamingURL: streamingContext.streamingURL,
 					pageCount: streamingContext.pageCount.toString(),
+				},
+			})
+		} else if (toUrl) {
+			router.push({
+				pathname: `/opds-legacy/[id]/feed/[url]`,
+				params: {
+					id: serverID,
+					url: toUrl,
 				},
 			})
 		} else {
