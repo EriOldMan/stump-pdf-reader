@@ -1098,7 +1098,7 @@
 				"visibility": {
 					"confirmation": {
 						"public": "To uczyni listę widoczną dla każdego",
-						"private": "Spowoduje to zmianę listy na prywatną, ukrywając ją przed wszystkimi, którzy mieli do niej dostęp",
+						"private": "Zmieni to listę na prywatną, ukrywając ją przed każdym, kto miał do tej pory dostęp",
 						"shared": "Wymagane będzie współdzielenie listy z wybranymi użytkownikami w celu nadania im dostępu",
 						"fallback": "Czy na pewno chcesz zmienić widoczność tej listy?"
 					}
@@ -1290,6 +1290,10 @@
 			"title": "Wygląd",
 			"description": "Dostosuj wygląd aplikacji",
 			"sections": {
+				"themeAndAppearance": {
+					"label": "Motyw i wygląd",
+					"description": "Podstawowe opcje wyglądu Stump"
+				},
 				"themeSelect": {
 					"label": "Motyw",
 					"description": [
@@ -1308,9 +1312,52 @@
 						"matrix": "Matrix"
 					}
 				},
+				"gradientToggle": {
+					"label": "Włącz gradienty",
+					"description": "Niektóre motywy opcjonalnie wspierają gradienty dla bardziej dynamicznego wyglądu"
+				},
 				"fontSelect": {
 					"label": "Czcionka",
 					"description": "Dostosuj czcionkę używaną w aplikacji"
+				},
+				"thumbnailRatioSelect": {
+					"label": "Współczynnik miniatur",
+					"description": "Współczynnik proporcji używany dla miniatur"
+				},
+				"thumbnailPlaceholder": {
+					"label": "Miniatury zastępcze",
+					"description": "Styl używany dla zastępczych miniatur",
+					"options": {
+						"grayscale": "Odcienie szarości",
+						"averageColor": "Średnie wartości kolorów",
+						"colorful": "Kolorowe",
+						"thumbhash": "Thumbhash"
+					}
+				},
+				"layoutAndArrangement": {
+					"label": "Układ i aranżacja",
+					"description": "Dostosuj jak Stump wyświetla informacje i organizuje zawartość"
+				},
+				"primaryNavigation": {
+					"label": "Główna nawigacja",
+					"description": "Wybierz pomiędzy minimalnym panelem bocznym lub nawigacją u górnym ekranu",
+					"options": {
+						"sidebar": "Pasek boczny",
+						"topbar": "Pasek górny"
+					},
+					"disclaimer": "* Ustawienia niewybranych opcji będą wyłączone lub ukryte"
+				},
+				"doubleSidebar": {
+					"label": "Panel boczny ustawień",
+					"description": "Włącza nawigację na panelu bocznym dla stron ustawień. Jeśli często używasz mniejszego ekranu, możesz chcieć to wyłączyć."
+				},
+				"replacePrimarySidebar": {
+					"label": "Zastąp główny panel boczny",
+					"description": "Każde wystąpienie drugorzędnego panelu bocznego zastąpi główny panel boczny, zamiast pokazywać go obok",
+					"tooltips": {
+						"doubleSidebar": "To ustawienie wymaga włączenia panelu bocznego ustawień",
+						"topbar": "To ustawienie nie jest obecnie obsługiwane, gdy główna nawigacja jest ustawiona jako pasek u góry ekranu"
+					}
 				},
 				"navigationArrangement": {
 					"label": "Układ nawigacji",
@@ -1338,6 +1385,60 @@
 							"help": "Odnośnik do strony przeznaczonej do przeglądania wszystkich elementów tego typu"
 						}
 					}
+				},
+				"displaySpacing": {
+					"label": "Rozstaw wyświetlania",
+					"description": "Dostosuj odstępy między elementami w aplikacji",
+					"options": {
+						"default": "Domyślne",
+						"compact": "Kompaktowe"
+					},
+					"disclaimer": "* Tryb kompaktowy wyświetlania nie jest jeszcze zaimplementowany"
+				},
+				"maxWidthPreference": {
+					"label": "Dostosowana szerokość",
+					"description": "Stump stosuje maksymalną szerokość widoku. To ustawienie pozwala dostosować lub usunąć ten limit",
+					"tooltip": "To ustawienie nie jest obecnie obsługiwane, jeśli główna nawigacja ustawiona jest jako panel boczny"
+				},
+				"additionalPreferences": {
+					"label": "Dodatkowe ustawienia",
+					"description": "Dostosuj wygląd i zachowanie Stump za pomocą tych dodatkowych ustawień"
+				},
+				"showThumbnailsInHeader": {
+					"label": "Pokazuj miniatury w nagłówkach",
+					"description": "Jeśli chcesz widzieć częściej miniatury, to ustawienie pokaże je w większej ilości miejsc",
+					"tooltips": {
+						"enabled": "To ustawienie pokaże miniatury w większej ilości miejsc",
+						"disabled": "To ustawienie nie pokaże miniatur w większej ilości miejsc"
+					}
+				},
+				"hideScrollbarToggle": {
+					"label": "Ukrywaj pasek przewijania",
+					"description": "Niektóre strony po prostu wyglądają lepiej bez paska przewijania, to ustawienie ukrywa go, gdy jest to możliwe",
+					"tooltips": {
+						"enabled": "To ustawienie ukrywa pasek przewijania na niektórych stronach",
+						"disabled": "To ustawienie wyświetli pasek przewijania na niektórych stronach"
+					}
+				},
+				"enableAlphabetFiltering": {
+					"label": "Filtrowanie alfabetyczne",
+					"description": "Pokaż filtrowanie alfabetyczne, jeśli dotyczy"
+				},
+				"enableFancyAnimations": {
+					"label": "Ozdobne animacje",
+					"description": "Szeroko pojęta opcja dla ozdobnych animacji w aplikacji"
+				},
+				"queryIndicatorToggle": {
+					"label": "Wskaźnik pobierania w tle",
+					"description": "Pokaż wskaźnik ładowania za każdym razem, gdy w tle uruchomione jest zapytanie"
+				},
+				"liveRefetchToggle": {
+					"label": "Pobieranie na żywo",
+					"description": "Pobierz zapytania w locie, aby pokazać nowe dane w miarę ich dodawania. Opcja ta może być zasobożerna"
+				},
+				"enableJobOverlayToggle": {
+					"label": "Nakładka zadań",
+					"description": "Pokaż pływającą nakładkę, gdy wykonywane jest zadanie"
 				}
 			}
 		},

@@ -1,110 +1,110 @@
 {
 	"underConstruction": {
-		"heading": "这很尴尬",
-		"message": "你已经停留在一个仍在开发的页面上。我很乐意向你展示它，但它还没有做好准备。",
-		"homeLink": "返回首页",
-		"githubLink": "查看 GitHub 问题"
+		"heading": "Dit is ongemakkelijk",
+		"message": "Je stuitte op een pagina die nog wordt ontwikkeld. Ik zou het graag aan je laten zien, maar het is nog niet helemaal klaar.",
+		"homeLink": "Ga naar start",
+		"githubLink": "Bekijk de GitHub issue"
 	},
 	"authScene": {
-		"claimHeading": "初始化您的服务器",
-		"claimText": "Stump服务器尚未初始化。请使用下面的表单创建您的帐户。之后就能够完全访问服务器所有功能。",
+		"claimHeading": "Initialiseer je server",
+		"claimText": "Deze Stump-server is nog niet ingesteld. Gebruik het onderstaande formulier om je account aan te maken. Zodra je dat hebt gedaan, heb je volledige toegang tot alle functies van de server.",
 		"form": {
 			"validation": {
-				"missingUsername": "用户名为必填项",
-				"missingPassword": "密码为必填项",
-				"usernameAlreadyExists": "该用户已经存在"
+				"missingUsername": "Gebruikersnaam is vereist",
+				"missingPassword": "Wachtwoord is vereist",
+				"usernameAlreadyExists": "Gebruikersnaam bestaat al"
 			},
 			"labels": {
-				"username": "用户名",
-				"password": "密码"
+				"username": "Gebruikersnaam",
+				"password": "Wachtwoord"
 			},
 			"buttons": {
-				"createAccount": "创建账户",
-				"login": "登录",
+				"createAccount": "Account aanmaken",
+				"login": "Log in",
 				"loginWithOidc": "Log in with OIDC",
 				"createAccountWithOidc": "Create Account with OIDC"
 			}
 		},
 		"toasts": {
-			"loggingIn": "登录中……",
-			"loggedIn": "欢迎回来！",
-			"loggedInFirstTime": "欢迎!",
-			"registering": "正在注册...",
-			"registered": "已注册！",
-			"loginFailed": "登录失败请重试",
-			"registrationFailed": "注册失败请重试"
+			"loggingIn": "Inloggen...",
+			"loggedIn": "Welkom terug!",
+			"loggedInFirstTime": "Welkom!",
+			"registering": "Registreren...",
+			"registered": "Geregistreerd!",
+			"loginFailed": "Inloggen mislukt. Probeer het nog een keer",
+			"registrationFailed": "Registratie mislukt. Probeer het nog een keer"
 		}
 	},
 	"adminLibrarySidebar": {
 		"libraryConfiguration": {
-			"heading": "媒体库配置",
-			"subtitleCreating": "您的新书库预览将在下面显示",
-			"subtitleEditing": "您书库编辑的预览将在下方显示"
+			"heading": "Bibliotheek instellingen",
+			"subtitleCreating": "Een voorbeeld van uw nieuwe bibliotheek wordt hieronder weergegeven",
+			"subtitleEditing": "Een voorbeeld van uw wijzigingen aan de bibliotheek worden hieronder weergegeven"
 		}
 	},
 	"bookOverviewScene": {
 		"fileInformation": {
-			"heading": "文件信息",
+			"heading": "Bestand informatie",
 			"labels": {
-				"fileSize": "文件大小",
-				"fileType": "文件类型",
-				"fileLocation": "文件位置",
-				"fileChecksum": "校验码"
+				"fileSize": "Bestandsgrootte",
+				"fileType": "Bestandstype",
+				"fileLocation": "Bestandslocatie",
+				"fileChecksum": "Checksum"
 			}
 		},
 		"emailBook": {
-			"heading": "电子邮件簿",
-			"description": "发送此书到设备或电子邮箱地址",
+			"heading": "E-mail dit boek",
+			"description": "Send this book to a device or email address",
 			"form": {
 				"email": {
-					"label": "电子邮箱",
-					"placeholder": "电子邮箱地址",
-					"description": "要发送该书的电子邮箱地址。单击添加以完成每个输入"
+					"label": "E-mail",
+					"placeholder": "E-mail adres",
+					"description": "Een e-mailadres om het boek naar te verzenden. Klik op toevoegen om elke invoer af te ronden"
 				},
 				"devices": {
-					"label": "设备",
-					"placeholder": "选择设备",
-					"noFilterMatch": "没有符合筛选条件的设备"
+					"label": "Apparaten",
+					"placeholder": "Selecteer apparaten",
+					"noFilterMatch": "Geen apparaten die overeenkomen met de filter"
 				}
 			}
 		},
-		"nextInSeries": "系列中的下一个"
+		"nextInSeries": "Volgende in serie"
 	},
 	"createOrUpdateBookClubForm": {
 		"fields": {
 			"name": {
-				"label": "名称",
-				"placeholder": "我的读书俱乐部",
-				"description": "您的读书俱乐部名称"
+				"label": "Naam",
+				"placeholder": "Mijn boekenclub",
+				"description": "De naam van jouw boekenclub"
 			},
 			"description": {
-				"label": "描述",
-				"placeholder": "《我们的旗帜意味着死亡》粉丝俱乐部。尽情阅读海盗题材漫画。",
-				"description": "您的读书俱乐部的简短描述（可选）"
+				"label": "Omschrijving",
+				"placeholder": "An 'Our Flag Means Death' fan club. We read pirate fiction to our hearts' content",
+				"description": "Een korte, optionele beschrijving van je boekenclub"
 			},
 			"is_private": {
-				"label": "私密俱乐部",
-				"description": "如果启用，只有您邀请的用户才能够加入您的读书俱乐部"
+				"label": "Privéclub",
+				"description": "Als je dit aanzet, kunnen alleen mensen die jij uitnodigt lid worden van je boekenclub"
 			},
 			"member_role_spec": {
-				"heading": "自定义角色映射",
+				"heading": "Aangepaste roltoewijzing",
 				"subtitle": [
-					"如果您喜欢，您可以在读书俱乐部创建自定义角色名称。欲了解更多信息，请参阅",
-					"文档"
+					"Je kunt zelf namen verzinnen voor de rollen in je boekenclub als je dat leuk vindt. Voor meer info kun je kijken bij de",
+					"documentatie"
 				],
 				"member": {
-					"label": "成员",
-					"placeholder": "成员",
-					"description": "您的读书俱乐部默认角色的名称"
+					"label": "Gebruiker",
+					"placeholder": "Gebruiker",
+					"description": "De naam van de standaardrol voor je boekenclub"
 				},
 				"moderator": {
-					"label": "版主",
-					"placeholder": "版主",
-					"description": "您的读书俱乐部版主的名称"
+					"label": "Moderator",
+					"placeholder": "Moderator",
+					"description": "De naam van de moderatorrol voor je boekenclub"
 				},
 				"admin": {
-					"label": "管理",
-					"placeholder": "管理",
+					"label": "Beheerder",
+					"placeholder": "Beheerder",
 					"description": "The name of the admin role for your book club"
 				},
 				"creator": {
@@ -115,76 +115,76 @@
 			},
 			"membershipOptions": {
 				"displayName": {
-					"label": "显示名",
+					"label": "Display Name",
 					"placeholder": "oromei",
 					"description": "An optional display name for your membership in the book club. If set, this takes precedence over your username"
 				},
 				"hideProgress": {
-					"label": "Hide Progress",
-					"description": "如果启用，您的阅读进度将对读书俱乐部的其他成员隐藏"
+					"label": "Verberg voortgang",
+					"description": "If enabled, your reading progress will be hidden from other members of the book club"
 				}
 			}
 		},
 		"validation": {
-			"missingName": "名称必填",
-			"alreadyTaken": "已经被使用"
+			"missingName": "Naam is verplicht",
+			"alreadyTaken": "is already taken"
 		}
 	},
 	"createBookClubScene": {
-		"heading": "创建一个新的读书俱乐部",
-		"subtitle": "您可以创建一个私人读书俱乐部，或者创建一个公开的任何人都可以加入的读书俱乐部",
+		"heading": "Maak een nieuwe boekenclub",
+		"subtitle": "You can create a private book club for a select few, or make it public for anyone on the server to join",
 		"form": {
-			"stepLabel": "步骤",
+			"stepLabel": "Stap",
 			"steps": [
 				{
-					"label": "基本",
-					"heading": "基本信息",
+					"label": "Basics",
+					"heading": "Basic Information",
 					"description": "The details of the club, including its name and description"
 				},
 				{
-					"label": "角色",
-					"heading": "角色",
+					"label": "Rollen",
+					"heading": "Rollen",
 					"description": "Customize the roles in your book club"
 				},
 				{
-					"label": "成员",
-					"heading": "成员设置",
-					"description": "书籍俱乐部的其他选项"
+					"label": "Lidmaatschap",
+					"heading": "Membership Preferences",
+					"description": "Additional options for your book club"
 				},
 				{
-					"label": "审查",
-					"heading": "审查",
-					"description": "在创建之前审查您的俱乐部设置"
+					"label": "Review",
+					"heading": "Review",
+					"description": "Review your club settings before creating it"
 				}
 			],
 			"review": {
-				"yes": "Yes",
+				"yes": "Ja",
 				"no": "No",
-				"none": "None",
+				"none": "Geen",
 				"labels": {
-					"name": "Name",
-					"description": "Description"
+					"name": "Naam",
+					"description": "Omschrijving"
 				}
 			},
-			"submit": "创建读书俱乐部"
+			"submit": "Maak een boekenclub"
 		}
 	},
 	"bookClubSettingsScene": {
 		"sidebar": {
 			"basics": "Basics",
 			"members": {
-				"members": "Members",
+				"members": "Gebruikers",
 				"roles": "Roles",
 				"label": "Membership"
 			},
 			"scheduling": {
 				"scheduler": "Scheduler",
-				"options": "Options",
+				"options": "Opties",
 				"label": "Scheduling"
 			},
 			"danger-zone": {
 				"delete": "Deletion",
-				"label": "Danger Zone"
+				"label": "Gevarenzone"
 			}
 		},
 		"basics": {
@@ -195,7 +195,7 @@
 			}
 		},
 		"members": {
-			"title": "Members",
+			"title": "Gebruikers",
 			"description": "Manage the members of this book club",
 			"sections": {}
 		},
@@ -211,7 +211,7 @@
 		},
 		"scheduling/scheduler": {
 			"title": "Scheduler",
-			"description": "Create and manage the schedule readings for this book club"
+			"description": "Create and manage the scheduled readings for this book club"
 		},
 		"scheduling/options": {
 			"title": "Options",
@@ -235,9 +235,9 @@
 	"createOrUpdateLibraryForm": {
 		"fields": {
 			"name": {
-				"label": "Name",
+				"label": "Naam",
 				"description": "A friendly name for your library",
-				"placeholder": "My Library"
+				"placeholder": "Mijn bibliotheek"
 			},
 			"path": {
 				"label": "Path",
@@ -273,11 +273,11 @@
 			},
 			"readingSettings": {
 				"section": {
-					"heading": "Reading settings",
+					"heading": "Leesinstellingen",
 					"description": "Default reader settings to use for books"
 				},
 				"imageScaling": {
-					"label": "Image scaling",
+					"label": "Afbeelding schalen",
 					"description": "How the image-based reader scales images to the page"
 				},
 				"readingMode": {
@@ -299,7 +299,7 @@
 					"disabled": "No additional configuration is required when thumbnail generation is disabled"
 				},
 				"enableSwitch": {
-					"label": "Enabled",
+					"label": "Ingeschakeld",
 					"description": "Generate thumbnail images for this library"
 				},
 				"resizeMethod": {
@@ -452,9 +452,9 @@
 		}
 	},
 	"createLibraryScene": {
-		"heading": "创建库",
-		"subtitle": "书库用来分组书籍。如果你想要刷新它或了解它如何运作，请查看",
-		"subtitleLink": "相关文档",
+		"heading": "Create New Library",
+		"subtitle": "Libraries are used to group your books together. If you want a refresh on how they work, check out the",
+		"subtitleLink": "relevante documentatie",
 		"form": {
 			"stepLabel": "Step",
 			"steps": [
@@ -480,18 +480,18 @@
 				}
 			],
 			"review": {
-				"yes": "Yes",
+				"yes": "Ja",
 				"no": "No",
-				"none": "None",
+				"none": "Geen",
 				"labels": {
 					"generateThumbnails": "Generate thumbnails",
 					"processThumbnailColors": "Process thumbnail colors",
 					"mode": "Mode",
-					"format": "Format",
-					"quality": "Quality",
-					"name": "Name",
+					"format": "Formaat",
+					"quality": "Kwaliteit",
+					"name": "Naam",
 					"path": "Path",
-					"description": "Description",
+					"description": "Omschrijving",
 					"tags": "Tags",
 					"pattern": "Pattern",
 					"ignoreRules": "Ignore rules",
@@ -507,7 +507,7 @@
 				}
 			},
 			"buttons": {
-				"confirm": "新建书库"
+				"confirm": "Bibliotheek creëren"
 			}
 		}
 	},
@@ -535,19 +535,19 @@
 		}
 	},
 	"librarySettingsScene": {
-		"heading": "设置",
-		"subtitle": "在此管理您的书库。如果您想要更新这些设置，请查看",
-		"subtitleLink": "相关文档",
+		"heading": "Manage Library",
+		"subtitle": "Manage your library here. If you want a refresh on these settings, check out the",
+		"subtitleLink": "relevante documentatie",
 		"sidebar": {
 			"basics": "Basics",
 			"options": {
-				"general": "General",
-				"reading": "Reading",
-				"scanning": "Scanning",
+				"general": "Algemeen",
+				"reading": "Lezen",
+				"scanning": "Scannen",
 				"thumbnails": "Thumbnails",
 				"ignore-rules": "Ignore Rules",
 				"analysis": "Analysis",
-				"label": "Options"
+				"label": "Opties"
 			},
 			"danger-zone": {
 				"access-control": "Access Control",
@@ -613,8 +613,8 @@
 						"title": "Scan record",
 						"description": "A detailed view of this scan record",
 						"fields": {
-							"library": "Library",
-							"date": "Date",
+							"library": "Bibliotheek",
+							"date": "Datum",
 							"config": "Config",
 							"jobOutput": "Job output",
 							"logs": "Logs"
@@ -625,10 +625,10 @@
 					"table": {
 						"columns": {
 							"timestamp": "Scanned at",
-							"config": "Config"
+							"config": "Configuratie"
 						},
-						"default": "Default",
-						"custom": "Custom"
+						"default": "Standaard",
+						"custom": "Aangepast"
 					},
 					"clearHistory": "Delete scan history"
 				}
@@ -658,7 +658,7 @@
 					"analyzeButton": "Analyze books"
 				},
 				"missingFiles": {
-					"heading": "Missing files",
+					"heading": "Ontbrekende bestanden",
 					"description": "Files that are referenced in the database but cannot be located on disk",
 					"noMissingFiles": "There are no missing files in this library"
 				},
@@ -688,12 +688,12 @@
 			"description": "Permanently delete this library and all of its contents or certain resources",
 			"sections": {
 				"cleanLibrary": {
-					"heading": "Clean library",
+					"heading": "Bibliotheek opschonen",
 					"description": "Remove all media and series that cannot be located on disk",
 					"disclaimerTitle": "No files will be deleted",
 					"disclaimer": "While this action will not delete any files, it will permanently delete all records relating to media and series which have a missing status",
 					"confirmation": {
-						"label": "Clean library",
+						"label": "Bibliotheek opschonen",
 						"text": "Are you sure you want to clean this library?"
 					},
 					"emptyText": "There was nothing to clean"
@@ -709,12 +709,12 @@
 		}
 	},
 	"errorScene": {
-		"heading": "我去，出错了",
-		"message": "发生错误：",
+		"heading": "lol, oops",
+		"message": "Er is een fout opgetreden:",
 		"buttons": {
-			"report": "反馈Bug",
-			"copy": "复制错误详情",
-			"goHome": "返回首页"
+			"report": "Fout melden",
+			"copy": "Kopieer foutgegevens",
+			"goHome": "Ga naar start"
 		}
 	},
 	"homeScene": {
@@ -735,8 +735,8 @@
 		"recentlyAddedSeries": {
 			"title": "Recently added series",
 			"emptyState": {
-				"heading": "没有要显示的系列",
-				"message": "您添加到书库的任何系列都会在此显示"
+				"heading": "Geen series om weer te geven",
+				"message": "Alle series die je toevoegt aan je bibliotheken worden hier weergegeven"
 			}
 		},
 		"recentlyAddedBooks": {
@@ -800,8 +800,8 @@
 	},
 	"seriesOverviewScene": {
 		"buttons": {
-			"continueReading": "继续阅读",
-			"downloadSeries": "下载系列"
+			"continueReading": "Verder lezen",
+			"downloadSeries": "Download serie"
 		}
 	},
 	"createOrUpdateSmartListForm": {
@@ -811,12 +811,12 @@
 		},
 		"fields": {
 			"name": {
-				"label": "Name",
+				"label": "Naam",
 				"placeholder": "My smart list",
 				"description": "Must be unique, but can be changed later"
 			},
 			"description": {
-				"label": "Description",
+				"label": "Omschrijving",
 				"placeholder": "A very intelligent list",
 				"description": "An optional description of your smart list"
 			},
@@ -824,7 +824,7 @@
 				"label": "Visibility",
 				"options": {
 					"public": {
-						"label": "Public",
+						"label": "Openbaar",
 						"description": "Accessible to all users on the server"
 					},
 					"shared": {
@@ -833,7 +833,7 @@
 						"createDisclaimer": "You can select who this list is shared with after creation"
 					},
 					"private": {
-						"label": "Private",
+						"label": "Privé",
 						"description": "Only you can access this smart list"
 					}
 				}
@@ -1004,12 +1004,12 @@
 				}
 			],
 			"review": {
-				"yes": "Yes",
-				"no": "No",
-				"none": "None",
+				"yes": "Ja",
+				"no": "Nee",
+				"none": "Geen",
 				"labels": {
-					"name": "Name",
-					"description": "Description",
+					"name": "Naam",
+					"description": "Omschrijving",
 					"visibility": "Visibility",
 					"grouping": "Group by"
 				}
@@ -1025,12 +1025,12 @@
 		},
 		"fields": {
 			"name": {
-				"label": "Name",
+				"label": "Naam",
 				"placeholder": "Koreader Sync"
 			},
 			"expiration": {
 				"label": "Expiration",
-				"placeholder": "Never"
+				"placeholder": "Nooit"
 			},
 			"expiresAt": {
 				"label": "Expires at",
@@ -1050,26 +1050,26 @@
 		"inheritDisclaimer": "This API key will inherit your full permissions, which means it can do anything you can do. Be careful with this setting"
 	},
 	"userSmartListsScene": {
-		"heading": "智能清单",
-		"subtitle": "保存您喜欢的搜索和过滤器以便于访问",
-		"searchPlaceholder": "筛选智能列表",
+		"heading": "Slimme lijsten",
+		"subtitle": "Uw favoriete zoekopdrachten en filters opgeslagen voor eenvoudige toegang",
+		"searchPlaceholder": "Filter slimme lijsten",
 		"buttons": {
-			"createSmartList": "创建智能列表"
+			"createSmartList": "Maak slimme lijst"
 		},
 		"list": {
 			"emptyState": {
-				"heading": "没有要显示的智能列表",
-				"noListsMessage": "创建一个智能列表以开始",
-				"noMatchesMessage": "尝试更改您的搜索参数"
+				"heading": "Geen slimme lijsten om weer te geven",
+				"noListsMessage": "Maak een slimme lijst om te beginnen",
+				"noMatchesMessage": "Probeer je zoekopdracht te veranderen"
 			},
 			"card": {
 				"meta": {
 					"figures": {
-						"books": "书",
-						"series": "系列",
-						"library": "库"
+						"books": "boek",
+						"series": "series",
+						"library": "bibliotheek"
 					},
-					"matches": "匹配项"
+					"matches": "Overeenkomsten"
 				}
 			}
 		}
@@ -1078,7 +1078,7 @@
 		"sidebar": {
 			"basics": "Basics",
 			"configuration": {
-				"label": "Configuration",
+				"label": "Configuratie",
 				"access": "Access",
 				"filters": "Filters"
 			},
@@ -1098,7 +1098,7 @@
 				"visibility": {
 					"confirmation": {
 						"public": "This will make the list visible to everyone",
-						"private": "This will change the list to be private, making anyone with access unable to see it",
+						"private": "This will change the list to be private, hiding it from anyone who previously had access",
 						"shared": "You will need to share the list with specific users to give them access",
 						"fallback": "Are you sure you want to change the visibility of this list?"
 					}
@@ -1133,67 +1133,67 @@
 	},
 	"userSmartListScene": {
 		"navigation": {
-			"items": "项目",
-			"settings": "设置"
+			"items": "Items",
+			"settings": "Instellingen"
 		},
 		"layout": {
-			"missingIdError": "此场景需要 URL 中的 ID",
-			"smartListNotFound": "未找到智能列表",
-			"viewCreateError": "创建视图失败",
-			"viewSaveError": "保存视图失败"
+			"missingIdError": "Deze scène vereist een ID in de URL",
+			"smartListNotFound": "Slimme lijst niet gevonden",
+			"viewCreateError": "Aanmaken weergave mislukt",
+			"viewSaveError": "Opslaan weergave mislukt"
 		},
 		"header": {
-			"backLink": "列表"
+			"backLink": "Lijsten"
 		},
 		"itemsScene": {
-			"smartListNotFound": "未找到智能列表",
+			"smartListNotFound": "Slimme lijst niet gevonden",
 			"actionHeader": {
 				"viewSelector": {
-					"customView": "自定义视图",
-					"defaultView": "默认视图",
-					"noViewsSaved": "没有保存的视图",
-					"selectView": "选择一个已保存视图"
+					"customView": "Aangepaste weergave",
+					"defaultView": "Standaard weergave",
+					"noViewsSaved": "Geen weergaves opgeslagen",
+					"selectView": "Kies een opgeslagen weergave"
 				},
 				"filterDrawer": {
-					"heading": "智能列表筛选器",
-					"description": "更改此视图会话的过滤器",
+					"heading": "Slimme lijst filters",
+					"description": "Wijzig de filters voor deze kijksessie",
 					"rawData": {
-						"heading": "原始过滤器数据",
-						"description": "Stump 将如何处理过滤器"
+						"heading": "Onbewerkte filtergegevens",
+						"description": "Zo worden de filters verwerkt door Stump"
 					},
 					"buttons": {
-						"save": "保存",
-						"cancel": "取消"
+						"save": "Opslaan",
+						"cancel": "Annuleer"
 					}
 				},
 				"search": {
-					"placeholder": "快速筛选"
+					"placeholder": "Snelle filter"
 				},
 				"viewManager": {
-					"updateSelected": "更新被选中的项目",
+					"updateSelected": "Selectie bijwerken",
 					"deleteSelected": "Delete view",
-					"create": "创建新视图",
+					"create": "Nieuwe weergave aanmaken",
 					"modal": {
 						"heading": {
-							"create": "创建视图",
-							"update": "更新视图"
+							"create": "Weergave maken",
+							"update": "Weergave bijwerken"
 						},
 						"description": {
-							"create": "为此智能列表创建新视图",
-							"update": "更新视图"
+							"create": "Maak een nieuwe weergave voor deze slimme lijst",
+							"update": "Weergave bijwerken"
 						},
 						"createForm": {
 							"name": {
-								"label": "名称",
-								"placeholder": "我的视图",
-								"description": "识别此视图的友好唯一名称"
+								"label": "Naam",
+								"placeholder": "Mijn weergave",
+								"description": "Een vriendelijke naam om deze weergave te identificeren"
 							}
 						},
 						"updateForm": {
 							"name": {
-								"label": "名称",
-								"placeholder": "我的视图",
-								"description": "此视图的更新名称（如果需要）"
+								"label": "Naam",
+								"placeholder": "Mijn weergave",
+								"description": "De bijgewerkte naam voor deze weergave, indien gewenst"
 							}
 						}
 					},
@@ -1207,12 +1207,12 @@
 	},
 	"settingsScene": {
 		"navigation": {
-			"general": "通用",
-			"logs": "日志",
-			"server": "服务器",
-			"jobs": "任务和配置",
-			"users": "用户管理",
-			"desktop": "桌面"
+			"general": "Algemeen",
+			"logs": "Logboeken",
+			"server": "Server",
+			"jobs": "Taken en instellingen",
+			"users": "Gebruikersbeheer",
+			"desktop": "Desktop"
 		},
 		"sidebar": {
 			"personal": {
@@ -1224,83 +1224,87 @@
 				"label": "Personal"
 			},
 			"management": {
-				"general": "通用",
-				"logs": "日志",
-				"users": "用户",
-				"jobs": "任务",
-				"access": "访问权限",
+				"general": "General",
+				"logs": "Logs",
+				"users": "Users",
+				"jobs": "Jobs",
+				"access": "Access",
 				"email": "Email",
-				"notifications": "通知",
-				"label": "服务器"
+				"notifications": "Notifications",
+				"label": "Management"
 			}
 		},
 		"app/account": {
-			"helmet": "账户设置",
-			"title": "账户设置",
-			"description": "与您的帐户相关的设置",
+			"helmet": "Account settings",
+			"title": "Account settings",
+			"description": "Settings related to your account",
 			"sections": {
 				"account": {
 					"validation": {
-						"invalidUrl": "请输入有效的 URL 地址",
-						"missingUsername": "用户名为必填项"
+						"invalidUrl": "Please enter a valid URL",
+						"missingUsername": "Username is required"
 					},
 					"labels": {
-						"username": "用户名",
-						"password": "密码",
-						"activeChangesPrompt": "您有未保存的更改"
+						"username": "Username",
+						"password": "Password",
+						"activeChangesPrompt": "You have unsaved changes"
 					},
 					"errors": {
-						"updateFailed": "更新您的个人资料时服务器发生错误。请重试。"
+						"updateFailed": "A server error occurred while updating your profile. Please try again."
 					},
 					"avatarPicker": {
-						"heading": "设置您的头像",
-						"subtitle": "Stump 支持自定义头像，头像可以通过提供图片的 URL 来设置。 为减少服务器上存储的数据，不支持图像上传。",
-						"preview": "当您输入了一个URL，预览将会在这里显示。",
+						"heading": "Set your Avatar Image",
+						"subtitle": "Stump supports custom avatars, which can be set by providing a URL to an image. Image uploads are not supported in order to reduce the amount of data stored on the server.",
+						"preview": "A preview will appear here once you have entered a URL.",
 						"labels": {
-							"imageUrl": "图片URL",
-							"customAvatar": "自定义头像"
+							"imageUrl": "Image URL",
+							"customAvatar": "Custom Avatar"
 						},
 						"buttons": {
-							"confirm": "确认图片",
-							"cancel": "取消",
-							"edit": "编辑",
-							"changeImage": "更改图片",
-							"removeImage": "删除图片"
+							"confirm": "Confirm Image",
+							"cancel": "Annuleer",
+							"edit": "Edit",
+							"changeImage": "Change Image",
+							"removeImage": "Remove Image"
 						}
 					},
 					"buttons": {
-						"confirm": "保存更改"
+						"confirm": "Save Changes"
 					}
 				},
 				"locale": {
 					"localeSelector": {
-						"label": "语言"
+						"label": "Language"
 					},
-					"heading": "语言及地区",
+					"heading": "Language and locale",
 					"subtitle": [
-						"Stump 支持多种语言和本地化，在下方设置您的偏好。请考虑帮助提升质量",
-						"Stump的翻译",
-						"如果你可以！"
+						"Stump supports multiple languages and locales, set your preferences below. Please consider helping improve the quality of",
+						"Stump's translations",
+						"if you're able to!"
 					]
 				}
 			}
 		},
 		"app/preferences": {
-			"helmet": "外观",
-			"title": "外观",
-			"description": "自定义应用程序的外观和感觉效果",
+			"helmet": "Appearance",
+			"title": "Appearance",
+			"description": "Customize the look and feel of the application",
 			"sections": {
+				"themeAndAppearance": {
+					"label": "Theme and appearance",
+					"description": "The basic look and feel options for Stump"
+				},
 				"themeSelect": {
-					"label": "主题",
+					"label": "Theme",
 					"description": [
 						"If you're interested in creating your own custom theme, check out the",
-						"documentation"
+						"documentatie"
 					],
 					"options": {
 						"system": "System",
-						"light": "亮色",
-						"dark": "深色",
-						"bronze": "青青铜光",
+						"light": "Licht",
+						"dark": "Donker",
+						"bronze": "Bronze light",
 						"ocean": "Ocean",
 						"autumn": "Autumn",
 						"cosmic": "Cosmic",
@@ -1308,9 +1312,52 @@
 						"matrix": "Matrix"
 					}
 				},
+				"gradientToggle": {
+					"label": "Enable gradients",
+					"description": "Some themes optionally support gradients for a more dynamic look"
+				},
 				"fontSelect": {
 					"label": "Font",
 					"description": "Customize the font used in the application"
+				},
+				"thumbnailRatioSelect": {
+					"label": "Thumbnail Ratio",
+					"description": "The aspect ratio to use for thumbnails"
+				},
+				"thumbnailPlaceholder": {
+					"label": "Thumbnail placeholder",
+					"description": "The style to use for thumbnail placeholders",
+					"options": {
+						"grayscale": "Grayscale",
+						"averageColor": "Average color",
+						"colorful": "Colorful",
+						"thumbhash": "Thumbhash"
+					}
+				},
+				"layoutAndArrangement": {
+					"label": "Layout and arrangement",
+					"description": "Customize how Stump displays information and organizes content"
+				},
+				"primaryNavigation": {
+					"label": "Primary navigation",
+					"description": "Choose between a minimal sidebar or a topbar navigation",
+					"options": {
+						"sidebar": "Sidebar",
+						"topbar": "Topbar"
+					},
+					"disclaimer": "* Settings for the unselected option will be disabled or hidden"
+				},
+				"doubleSidebar": {
+					"label": "Settings sidebar",
+					"description": "Enables the sidebar navigation for the settings pages. If you frequently use a smaller screen, you may want to disable this."
+				},
+				"replacePrimarySidebar": {
+					"label": "Replace primary sidebar",
+					"description": "Any instance of a secondary sidebar will replace the primary sidebar instead of being displayed next to it",
+					"tooltips": {
+						"doubleSidebar": "This setting requires the settings sidebar to be enabled",
+						"topbar": "This setting is not currently supported when the primary navigation is set to top bar"
+					}
 				},
 				"navigationArrangement": {
 					"label": "Navigation arrangement",
@@ -1330,26 +1377,80 @@
 					},
 					"entityOptions": {
 						"createAction": {
-							"label": "Show create action",
-							"help": "Show the create action in the navigation"
+							"label": "Toon aanmaak actie",
+							"help": "Toon de aanmaak actie in de navigatie"
 						},
 						"linkToAll": {
-							"label": "See all link",
-							"help": "A link to a page dedicated to viewing all items of this type"
+							"label": "Laat \"bekijk alle\" knop zien",
+							"help": "Een link naar een pagina gewijd aan het bekijken van alle items van dit type"
 						}
 					}
+				},
+				"displaySpacing": {
+					"label": "Display spacing",
+					"description": "Adjusts the overall spacing between elements throughout the app",
+					"options": {
+						"default": "Default",
+						"compact": "Compact"
+					},
+					"disclaimer": "* Compact display mode is not implemented yet"
+				},
+				"maxWidthPreference": {
+					"label": "Adjusted width",
+					"description": "Stump applies a max-width to the viewport. This setting allows you to adjust or remove this limit",
+					"tooltip": "This setting is not currently supported when the primary navigation is set to sidebar"
+				},
+				"additionalPreferences": {
+					"label": "Additional preferences",
+					"description": "Customize the appearance and behavior of Stump with these additional settings"
+				},
+				"showThumbnailsInHeader": {
+					"label": "Show thumbnails in headers",
+					"description": "If you prefer to see thumbnails more often, this setting will show them in more places",
+					"tooltips": {
+						"enabled": "This setting will show thumbnails in more places",
+						"disabled": "This setting will not show thumbnails in more places"
+					}
+				},
+				"hideScrollbarToggle": {
+					"label": "Hide scrollbar",
+					"description": "Some pages simply look better without a scrollbar, this setting will hide it when possible",
+					"tooltips": {
+						"enabled": "This setting will hide the scrollbar on some pages",
+						"disabled": "This setting will show the scrollbar on some pages"
+					}
+				},
+				"enableAlphabetFiltering": {
+					"label": "Alphabet filtering",
+					"description": "Show an alphabet filter when applicable"
+				},
+				"enableFancyAnimations": {
+					"label": "Fancy animations",
+					"description": "A broad opt-in for fancier animations throughout the app"
+				},
+				"queryIndicatorToggle": {
+					"label": "Background fetch indicator",
+					"description": "Show a loading indicator whenever a query is running in the background"
+				},
+				"liveRefetchToggle": {
+					"label": "Live refetch",
+					"description": "Refetch queries on the fly to hydrate the UI with new data as it comes in. This can be resource intensive"
+				},
+				"enableJobOverlayToggle": {
+					"label": "Job overlay",
+					"description": "Show a floating overlay while a job is running"
 				}
 			}
 		},
 		"app/apiKeys": {
-			"helmet": "API keys",
-			"title": "API keys",
+			"helmet": "API-sleutels",
+			"title": "API-sleutels",
 			"description": "Manage your generated Stump API keys",
 			"shared": {
 				"fields": {
-					"name": "Name",
+					"name": "Naam",
 					"expiration": "Expiration",
-					"last_used": "Last used",
+					"last_used": "Laatst gebruikt",
 					"created": "Created",
 					"permissions": "Permissions",
 					"inherited": "Inherited",
@@ -1398,9 +1499,9 @@
 			}
 		},
 		"app/reader": {
-			"helmet": "阅读设置",
-			"title": "阅读设置",
-			"description": "Stump 阅读器的默认选项。这些选项仅绑定到当前设备",
+			"helmet": "Lezer instellingen",
+			"title": "Lezer instellingen",
+			"description": "Standaard instellingen voor Stump lezers. Deze zijn alleen gebonden aan je huidige apparaat",
 			"sections": {
 				"universal": {
 					"sections": {
@@ -1411,16 +1512,16 @@
 					}
 				},
 				"imageBasedBooks": {
-					"label": "图书",
-					"description": "卡通、漫画和其他以图为主的书",
+					"label": "Op afbeelding gebaseerde boeken",
+					"description": "Strips, manga en andere op afbeeldingen gebaseerde boeken",
 					"sections": {
 						"preloadAheadCount": {
-							"label": "提前预加载数量",
-							"description": "预加载到当前之后的页面数"
+							"label": "Vooruit laden aantal",
+							"description": "Het aantal vooraf te laden pagina's vanaf de huidige pagina"
 						},
 						"preloadBehindCount": {
-							"label": "提前预加载数量",
-							"description": "预加载到当前之后的页面数"
+							"label": "Achter vooruit laden aantal",
+							"description": "Het aantal vooraf te laden pagina's voor de huidige pagina"
 						}
 					}
 				},
@@ -1454,9 +1555,9 @@
 			}
 		},
 		"app/desktop": {
-			"helmet": "桌面设置",
-			"title": "桌面设置",
-			"description": "Stump 桌面应用程序相关设置",
+			"helmet": "Desktop instellingen",
+			"title": "Desktop instellingen",
+			"description": "Instellingen gerelateerd aan de Stump desktop applicatie",
 			"sections": {
 				"configuredServers": {
 					"label": "Configured servers",
@@ -1563,23 +1664,23 @@
 			}
 		},
 		"server/general": {
-			"helmet": "常规服务器设定",
-			"title": "常规设置",
-			"description": "与您的 Stump 服务器实例相关的常规设置",
+			"helmet": "Algemene serverinstellingen",
+			"title": "Algemene instellingen",
+			"description": "Algemene instellingen gerelateerd aan je Stump server",
 			"sections": {
 				"updateAvailable": {
-					"message": "您的服务器不是最新版本。请更新到最新版本！"
+					"message": "Uw server is niet up-to-date. Update alsjeblieft naar de nieuwste versie!"
 				},
 				"serverInfo": {
-					"title": "服务器信息",
-					"description": "Stump 服务器实例的基本详细信息",
+					"title": "Serverinformatie",
+					"description": "Basisgegevens over uw Stump server instantie",
 					"build": {
-						"label": "构建",
-						"description": "关于版本和构建的细节",
+						"label": "Bouwversie",
+						"description": "Details over de versie en bouwversie",
 						"version": {
-							"semver": "版本",
-							"commitHash": "确切提交",
-							"date": "编译日期"
+							"semver": "Versie",
+							"commitHash": "Exacte commit",
+							"date": "Build-datum"
 						}
 					},
 					"nonStableChannel": {
@@ -1591,27 +1692,27 @@
 					}
 				},
 				"serverPublicUrl": {
-					"label": "Public URL",
+					"label": "Openbare URL",
 					"description": "The URL that your server is accessible from outside your network, if applicable. This will enable invite links and other features"
 				}
 			}
 		},
 		"server/logs": {
-			"helmet": "日志",
-			"title": "日志",
-			"description": "Stump 服务器实例生成的日志",
+			"helmet": "Logs",
+			"title": "Logs",
+			"description": "The logs generated by your Stump server instance",
 			"sections": {
 				"persistedLogs": {
-					"title": "已存日志",
-					"description": "这些日志已手动保存在数据库中，通常与特定任务或事件关联。",
+					"title": "Persisted logs",
+					"description": "These logs have been manually persisted to the database, typically associated with a specific job or event",
 					"table": {
 						"columns": {
-							"level": "级别",
-							"message": "消息",
-							"timestamp": "时间戳"
+							"level": "Level",
+							"message": "Message",
+							"timestamp": "Timestamp"
 						},
-						"emptyHeading": "没有可显示的日志",
-						"emptySubtitle": "您的服务器非常健康或很不健康"
+						"emptyHeading": "No logs to display",
+						"emptySubtitle": "Your server is either very healthy or very unhealthy"
 					},
 					"deleteLogs": {
 						"title": "Delete logs",
@@ -1621,19 +1722,19 @@
 					}
 				},
 				"liveLogs": {
-					"title": "实时日志",
-					"description": "直接实时从 Stump 服务器串流"
+					"title": "Live logs feed",
+					"description": "Streamed directly from your Stump server instance in real-time"
 				}
 			}
 		},
 		"server/jobs": {
-			"helmet": "任务",
-			"title": "任务",
-			"description": "Stump 服务器实例上运行的后台任务",
+			"helmet": "Jobs",
+			"title": "Jobs",
+			"description": "Background jobs that run on your Stump server instance",
 			"sections": {
 				"scheduling": {
-					"title": "计划任务",
-					"description": "一些任务可以配置运行在定时任务中，更改此配置的将在服务器重启后生效",
+					"title": "Scheduling",
+					"description": "Some jobs can be configured to run on a schedule. Changes to this configuration will take effect after a server restart",
 					"disclaimer": "The job scheduler is really basic and will be improved in the future. Please reach out for feedback or suggestions!",
 					"createOrUpdateConfig": {
 						"fields": {
@@ -1661,20 +1762,20 @@
 					}
 				},
 				"history": {
-					"title": "历史记录",
-					"description": "Stump 服务器上已运行的任务记录",
+					"title": "History",
+					"description": "A record of jobs that have been run on your Stump server instance",
 					"table": {
 						"columns": {
-							"name": "类型",
-							"description": "描述",
-							"status": "状态",
-							"createdAt": "开始于",
-							"elapsed": "已用时",
-							"tasks": "任务"
+							"name": "Type",
+							"description": "Description",
+							"status": "Status",
+							"createdAt": "Started At",
+							"elapsed": "Elapsed",
+							"tasks": "Tasks"
 						},
-						"emptyHeading": "没有要显示的任务",
-						"emptySubtitle": "如果你没有任务，你就不可能有任务",
-						"deleteAllMessage": "任务历史和统计可以随时从数据库中删除。此操作不能撤消"
+						"emptyHeading": "There are no jobs to display",
+						"emptySubtitle": "You can't have a job if you don't have a job",
+						"deleteAllMessage": "Job history and statistics may be deleted from the database at any time. This action cannot be undone"
 					},
 					"deleteJobHistory": {
 						"title": "Delete job history",
@@ -1687,56 +1788,56 @@
 			}
 		},
 		"server/users": {
-			"helmet": "用户管理",
-			"title": "用户",
-			"description": "管理此服务器上的用户",
+			"helmet": "User management",
+			"title": "Users",
+			"description": "Manage the users on this server",
 			"createUser": {
-				"helmet": "创建用户",
-				"title": "创建用户",
-				"description": "在此服务器上创建新用户"
+				"helmet": "Create user",
+				"title": "Create user",
+				"description": "Create a new user on this server"
 			},
 			"updateUser": {
-				"helmet": "更新用户",
-				"title": "更新用户",
-				"description": "更新此用户的详细信息"
+				"helmet": "Update user",
+				"title": "Update user",
+				"description": "Update the details of this user"
 			},
 			"createOrUpdateForm": {
 				"accessControl": {
-					"heading": "访问控制和限制",
+					"heading": "Access control and restrictions",
 					"subtitle": [
-						"配置您想要对此用户应用的任何限制。欲了解更多有关访问控制的信息，请参阅",
-						"文档"
+						"Configure any restrictions you want to apply to this user. For more information about access control, see the",
+						"documentation"
 					],
 					"ageRestriction": {
-						"label": "年龄限制",
-						"description": "限制用户访问设定年龄分级阈值以上的内容",
+						"label": "Age restriction",
+						"description": "Restricts the user from accessing content above the set age rating threshold",
 						"placeholder": "13",
 						"enforceUnset": {
-							"label": "在未设置时生效",
-							"description": "如果启用此选项，用户将被限制访问没有年龄评级的内容"
+							"label": "Enforce on unset",
+							"description": "If enabled, users will be restricted from accessing content with no age rating available"
 						}
 					},
 					"tagRestriction": {
-						"label": "标签限制",
-						"description": "限制用户访问选中标签的内容",
-						"placeholder": "成人, 血腥"
+						"label": "Tag restrictions",
+						"description": "Restricts the user from accessing content with the selected tags",
+						"placeholder": "Adult, Gore"
 					}
 				},
 				"permissions": {
-					"heading": "权限",
+					"heading": "Permissions",
 					"subtitle": [
-						"选择您想要授予此用户的权限。欲了解更多关于每个权限的信息，请查看",
-						"文档"
+						"Select the permissions you want to grant to this user. For more information on what each permission does, see the",
+						"documentation"
 					],
 					"bookclub": {
-						"label": "读书俱乐部",
+						"label": "Book Clubs",
 						"read": {
-							"label": "读书俱乐部功能访问",
-							"description": "允许用户访问读书俱乐部功能，包括查看和加入读书俱乐部"
+							"label": "Access book club features",
+							"description": "Allows the user to access book club features, including viewing and joining book clubs"
 						},
 						"create": {
-							"label": "创建读书俱乐部",
-							"description": "允许用户创建新的读书俱乐部"
+							"label": "Create book clubs",
+							"description": "Allows the user to create new book clubs"
 						}
 					},
 					"feature": {
@@ -1751,18 +1852,18 @@
 						}
 					},
 					"file": {
-						"label": "文件管理",
+						"label": "File Management",
 						"explorer": {
-							"label": "文件浏览器",
-							"description": "允许用户访问各种文件浏览器。若启用此功能则无法保证内容限制。"
+							"label": "File Explorer",
+							"description": "Allows the user to access the Library File Explorer.\nContent restriction is not supported when this feature is granted"
 						},
 						"download": {
-							"label": "下载文件",
-							"description": "允许用户从服务器下载文件"
+							"label": "Download files",
+							"description": "Allows the user to download files from the server"
 						},
 						"upload": {
-							"label": "上传文件",
-							"description": "允许用户上传文件到服务器"
+							"label": "Upload files",
+							"description": "Allows the user to upload files to the server"
 						}
 					},
 					"emailer": {
@@ -1792,62 +1893,62 @@
 						}
 					},
 					"library": {
-						"label": "书库管理",
+						"label": "Library Management",
 						"create": {
-							"label": "新建书库",
-							"description": "允许用户创建新的书库。\n包括扫描和编辑的权限"
+							"label": "Create libraries",
+							"description": "Allows the user to create new libraries.\nIncludes permissions to edit and scan"
 						},
 						"scan": {
-							"label": "扫描书库",
-							"description": "允许用户对现有书库启动扫描"
+							"label": "Scan libraries",
+							"description": "Allows the user to initiate scans for existing libraries"
 						},
 						"edit": {
-							"label": "编辑书库",
-							"description": "允许用户编辑现有书库的基本信息"
+							"label": "Edit libraries",
+							"description": "Allows the user to edit basic details for existing libraries"
 						},
 						"manage": {
-							"label": "管理书库",
-							"description": "允许用户管理现有书库的高级设置。\n包括扫描和编辑的权限"
+							"label": "Manage libraries",
+							"description": "Allows the user to manage advanced settings for existing libraries.\nIncludes permissions to edit and scan"
 						},
 						"delete": {
-							"label": "删除书库",
-							"description": "允许用户删除现有的书库。\n包括扫描、管理和编辑的权限"
+							"label": "Delete libraries",
+							"description": "Allows the user to delete existing libraries.\nIncludes permissions to edit, manage, and scan"
 						}
 					},
 					"server": {
-						"label": "服务器管理",
+						"label": "Server Management",
 						"manage": {
-							"label": "管理服务器",
-							"description": "允许用户管理服务器。\n包括*许多*其他权限"
+							"label": "Manage server",
+							"description": "Allows the user to manage the server.\nIncludes *many* other permissions"
 						}
 					},
 					"user": {
-						"label": "用户管理",
+						"label": "User Management",
 						"read": {
-							"label": "读取用户",
-							"description": "允许用户查询服务器上的其他用户。这对于某些功能是必需的，例如排除用户访问书库"
+							"label": "Read users",
+							"description": "Allows the user to query other users on the server. This is required for some other features, e.g. excluding users from accessing a library"
 						},
 						"manage": {
-							"label": "管理用户",
-							"description": "允许用户管理服务器上的其他用户。\n包括读、创建和更新的权限"
+							"label": "Manage users",
+							"description": "Allows the user to manage other users on the server.\nIncludes permissions to create and update"
 						}
 					},
 					"smartlist": {
-						"label": "智能列表",
+						"label": "Smart Lists",
 						"read": {
-							"label": "访问智能列表功能",
-							"description": "允许用户访问智能列表功能。 Granular 权限尚未实现，\n包括读、创建和更新他们自己的列表的权限"
+							"label": "Access smart list feature",
+							"description": "Allows the user to access smart lists features"
 						}
 					}
 				},
 				"validation": {
-					"ageRestrictionTooLow": "年龄限制不能小于0",
+					"ageRestrictionTooLow": "Age restriction cannot be less than 0",
 					"missingUsername": "Username is required",
 					"missingPassword": "Password is required",
 					"usernameAlreadyExists": "Username already exists"
 				},
-				"createSubmitButton": "创建用户",
-				"updateSubmitButton": "更新用户"
+				"createSubmitButton": "Create user",
+				"updateSubmitButton": "Update user"
 			},
 			"loginActivity": {
 				"deleteConfirmation": {
@@ -1860,15 +1961,15 @@
 		"server/email": {
 			"helmet": "Email settings",
 			"title": "Email",
-			"description": "Settings related to the configuring an SMTP emailer for your Stump server instance",
+			"description": "Settings related to configuring an SMTP emailer for your Stump server instance",
 			"sections": {
 				"emailers": {
 					"title": "SMTP emailers",
 					"description": "The clients you have configured for sending emails from your Stump server instance",
 					"singleInstanceDisclaimer": "While Stump supports multiple SMTP configurations in the backend, only one can be configured on the UI. This will be improved in the future",
 					"list": {
-						"emptyHeading": "未配置SMTP电子邮件服务器",
-						"primaryEmailer": "首选电子邮箱",
+						"emptyHeading": "No SMTP emailers configured",
+						"primaryEmailer": "Primary emailer",
 						"sendHistory": {
 							"heading": "Send history",
 							"description": "A record of emails sent from this emailer",
@@ -1880,7 +1981,7 @@
 									"createdAt": "Sent at"
 								}
 							},
-							"emptyHeading": "无历史记录",
+							"emptyHeading": "No history",
 							"emptySubtitle": "The history of this emailer is empty. It has either not been used or the history has been cleared"
 						}
 					}
@@ -1888,10 +1989,10 @@
 				"devices": {
 					"title": "Email devices",
 					"description": "The device aliases you have configured for receiving emails from your Stump server instance",
-					"addDevice": "添加设备别名",
+					"addDevice": "Add device alias",
 					"addOrUpdateDevice": {
 						"title": {
-							"create": "创建设备别名",
+							"create": "Create device alias",
 							"update": "Update device alias"
 						},
 						"name": {
@@ -1968,7 +2069,7 @@
 				},
 				"maxAttachmentSize": {
 					"label": "Max attachment size",
-					"description": "The maximum size, in bytes, that an attachment can be"
+					"description": "De maximale grootte, in bytes, die een bijlage mag hebben"
 				},
 				"submit": {
 					"create": "Create emailer",
@@ -1978,7 +2079,7 @@
 			"createEmailer": {
 				"helmet": "Create emailer",
 				"title": "Create emailer",
-				"description": "Create a new SMTP emailer for your Stump server instance"
+				"description": "Maak een nieuwe SMTP-mailer aan voor je Stump-server"
 			},
 			"updateEmailer": {
 				"helmet": "Update emailer",
@@ -1988,150 +2089,150 @@
 		}
 	},
 	"jobOverlay": {
-		"backupHeading": "正在执行的任务"
+		"backupHeading": "Job in Progress"
 	},
 	"libraryStats": {
-		"seriesCount": "总系列数",
-		"bookCount": "书籍总数",
-		"diskUsage": "磁盘使用量"
+		"seriesCount": "Totaal aantal series",
+		"bookCount": "Totaal aantal boeken",
+		"diskUsage": "Schijfgebruik"
 	},
 	"noLibraries": {
-		"heading": "暂无内容",
-		"messagePrefix": "你不能看到你没有的内容",
+		"heading": "Hier valt niks te zien",
+		"messagePrefix": "Je kunt niet zien wat je niet hebt",
 		"message": {
-			"create": "创建一个库以开始使用",
-			"wait": "一旦创建了库，它们将会显示在这里"
+			"create": "Maak een bibliotheek om te beginnen",
+			"wait": "Zodra er bibliotheken zijn aangemaakt, worden ze hier weergegeven"
 		},
 		"links": {
-			"create": "新建书库",
-			"settings": "前往设置"
+			"create": "Bibliotheek aanmaken",
+			"settings": "Ga naar instellingen"
 		}
 	},
 	"pagination": {
 		"buttons": {
-			"next": "下一页",
-			"previous": "上一页"
+			"next": "Volgende",
+			"previous": "Vorige"
 		},
 		"popover": {
-			"heading": "转到页面",
+			"heading": "Ga naar pagina",
 			"buttons": {
-				"confirm": "跳转",
-				"cancel": "取消"
+				"confirm": "Start",
+				"cancel": "Annuleren"
 			}
 		}
 	},
 	"signOutModal": {
-		"title": "退出登录",
-		"message": "您确定要退出登陆吗？",
+		"title": "Uitloggen",
+		"message": "Weet je zeker dat je wilt uitloggen?",
 		"buttons": {
-			"cancel": "取消",
-			"signOut": "退出登录"
+			"cancel": "Annuleren",
+			"signOut": "Uitloggen"
 		}
 	},
 	"sidebar": {
 		"buttons": {
-			"home": "首页",
-			"libraries": "书库",
-			"books": "浏览",
-			"bookClubs": "读书俱乐部",
-			"createLibrary": "新建书库",
-			"noLibraries": "暂无书库",
-			"createBookClub": "创建读书俱乐部",
-			"noBookClubs": "暂无读书俱乐部",
-			"settings": "设置",
-			"themeToggle": "切换主题",
-			"goForward": "向前",
-			"goBack": "后退",
-			"smartlists": "智能列表",
-			"noSmartlists": "暂无智能列表",
-			"createSmartlist": "创建智能列表",
-			"seeAll": "查看全部"
+			"home": "Home",
+			"libraries": "Bibliotheken",
+			"books": "Ontdekken",
+			"bookClubs": "Boekenclubs",
+			"createLibrary": "Bibliotheek aanmaken",
+			"noLibraries": "Geen bibliotheken",
+			"createBookClub": "Maak een boekenclub",
+			"noBookClubs": "Geen boekenclubs",
+			"settings": "Instellingen",
+			"themeToggle": "Toggle Theme",
+			"goForward": "Go Forward",
+			"goBack": "Go Back",
+			"smartlists": "Smart lists",
+			"noSmartlists": "No smart lists",
+			"createSmartlist": "Create smart list",
+			"seeAll": "See all"
 		},
 		"libraryOptions": {
-			"scanLibrary": "扫描",
-			"fileExplorer": "文件",
-			"manageLibrary": "设置",
-			"deleteLibrary": "删除"
+			"scanLibrary": "Scannen",
+			"fileExplorer": "Bestanden",
+			"manageLibrary": "Manage",
+			"deleteLibrary": "Delete"
 		},
 		"versionInformation": {
-			"heading": "版本信息",
-			"semVer": "语义化版本",
-			"commitHash": "提交哈希",
-			"buildDate": "构建日期"
+			"heading": "Version Information",
+			"semVer": "Semantic Version",
+			"commitHash": "Commit Hash",
+			"buildDate": "Build Date"
 		}
 	},
 	"search": {
-		"placeholder": "搜索"
+		"placeholder": "Zoeken"
 	},
 	"serverSOS": {
-		"heading": "服务器不可用",
+		"heading": "Server niet beschikbaar",
 		"desktop": {
-			"message": "出现网络错误，您的 Stump 服务器目前不可用。请确保它正在运行并且可以在此设备上访问。\n如果您的服务器 URL 已经更改，您可以使用下面的表单更新它"
+			"message": "Er is een netwerkfout opgetreden die erop wijst dat uw Stump-server momenteel niet beschikbaar is. Zorg ervoor dat deze actief is en toegankelijk vanaf dit apparaat.\nAls de URL van uw server is gewijzigd, kunt u deze bijwerken met behulp van het onderstaande formulier."
 		},
 		"web": {
-			"message": "网络错误，您的 Stump 服务器目前不可用。请确保它正在运行并且可以从此设备访问"
+			"message": "Er is een netwerkfout opgetreden die erop wijst dat je Stump-server momenteel niet beschikbaar is. Zorg ervoor dat deze actief is en toegankelijk vanaf dit apparaat."
 		},
-		"reconnected": "重连到服务器！正在重定向...",
-		"reconnectionFailed": "出了些问题"
+		"reconnected": "Opnieuw verbonden met server! Doorsturen...",
+		"reconnectionFailed": "Er is iets misgegaan!"
 	},
 	"serverStatusOverlay": {
-		"heading": "服务器未连接",
+		"heading": "Server is niet verbonden",
 		"message": [
-			"请检查您的网络连接",
-			"点击此处",
-			"更改您的服务器 URL"
+			"Controleer je internetverbinding",
+			"Klik hier",
+			"om de server-URL te wijzigen"
 		]
 	},
 	"slidingList": {
-		"empty": "没有可显示的项目",
+		"empty": "Geen items om weer te geven",
 		"buttons": {
-			"next": "快进",
-			"previous": "快退"
+			"next": "Vooruitzoeken",
+			"previous": "Terugzoeken"
 		}
 	},
 	"tagSelect": {
-		"placeholder": "选择或创建标签",
-		"placeholderNoTags": "没有可用的标签"
+		"placeholder": "Kies of maak een tag",
+		"placeholderNoTags": "Geen tags beschikbaar"
 	},
 	"thumbnailDropdown": {
-		"label": "选择缩略图",
+		"label": "Edit thumbnail",
 		"options": {
-			"selectFromBooks": "从书中选择",
-			"uploadImage": "上传图片"
+			"selectFromBooks": "Kies uit boeken",
+			"uploadImage": "Afbeelding uploaden"
 		},
 		"uploadImage": {
-			"emptyState": "图片预览将显示在这里",
-			"prompt": "拖放图片到此处或点击以选择",
-			"remove": "删除图像"
+			"emptyState": "Een voorbeeld van je afbeelding verschijnt hier",
+			"prompt": "Drop image here or click to select",
+			"remove": "Remove image"
 		}
 	},
 	"common": {
-		"add": "添加",
-		"cancel": "取消",
-		"confirm": "确认",
+		"add": "Toevoegen",
+		"cancel": "Annuleren",
+		"confirm": "Bevestigen",
 		"delete": "Delete",
 		"enter": "Enter",
-		"save": "保存",
-		"send": "发送",
-		"saveChanges": "保存更改",
-		"noChanges": "没有更改",
-		"create": "创建",
-		"edit": "编辑",
-		"update": "更新",
-		"upload": "上传",
-		"uploading": "上传中...",
-		"unimplemented": "此功能尚未实现！稍后再试",
-		"limitedFunctionality": "这尚未完全实现，并且缺少一些功能。请稍后再试",
-		"logIn": "登录",
-		"login": "登录",
-		"seeError": "查看错误",
-		"remove": "移除",
-		"goBack": "返回",
-		"goToServers": "前往服务器",
-		"notReady": "此功能尚未准备好",
-		"notUsedYet": "暂未使用",
-		"never": "从不",
-		"scan": "扫描",
+		"save": "Opslaan",
+		"send": "Verzenden",
+		"saveChanges": "Wijzigen opslaan",
+		"noChanges": "Geen wijzigingen",
+		"create": "Maken",
+		"edit": "Bewerken",
+		"update": "Update",
+		"upload": "Upload",
+		"uploading": "Uploaden",
+		"unimplemented": "Deze functionaliteit is nog niet ingebouwd! Kom later terug",
+		"limitedFunctionality": "Dit is nog niet volledig ingebouwd en mist nog wat functies. Kom later terug",
+		"logIn": "Inloggen",
+		"login": "Inloggen",
+		"seeError": "Zie foutmelding",
+		"remove": "Verwijderen",
+		"goBack": "Go back",
+		"goToServers": "Go to servers",
+		"notReady": "This feature is not ready",
+		"notUsedYet": "Nog niet gebruikt",
+		"never": "Nooit",
+		"scan": "Scannen",
 		"somethingWentWrong": "Something went wrong"
 	},
 	"userPermissions": {
