@@ -19,15 +19,17 @@ import { useActiveServer } from '~/components/activeServer'
 import { InfoRow, LongValue } from '~/components/book/overview'
 import ChevronBackLink from '~/components/ChevronBackLink'
 import { ThumbnailImage } from '~/components/image'
-import { PublicationMenu } from '~/components/opds'
+import { CreditsSection, PublicationMenu } from '~/components/opds'
 import {
 	extensionFromMime,
 	getAcquisitionLink,
 	getDateField,
+	getFlexibleArrayField,
 	getNumberField,
 	getPublicationThumbnailURL,
 	getStringField,
 } from '~/components/opds/utils'
+import MetadataBadgeSection from '~/components/overview/MetadataBadgeSection'
 import { Button, Card, Icon, Text } from '~/components/ui'
 import {
 	useIsOPDSBookDownloading,
@@ -111,7 +113,15 @@ export default function Screen() {
 
 	const numberOfPages = getNumberField(metadata, 'numberOfPages') ?? readingOrder?.length
 	const modified = getDateField(metadata, 'modified')
+	const published = getDateField(metadata, 'published')
 	const description = getStringField(metadata, 'description')
+	const subtitle = getStringField(metadata, 'subtitle')
+	const publisher = getStringField(metadata, 'publisher')
+	const language = getStringField(metadata, 'language')
+	const readingDirection = getStringField(metadata, 'readingDirection')
+	const volume = getNumberField(metadata, 'volume')
+	const issue = getNumberField(metadata, 'issue')
+	const subjects = getFlexibleArrayField(metadata, 'subject')
 
 	const belongsToSeries = Array.isArray(belongsTo?.series) ? belongsTo.series[0] : belongsTo?.series
 	const seriesURL = belongsToSeries?.links?.find((link) => link.rel === 'self')?.href
@@ -145,9 +155,6 @@ export default function Screen() {
 			],
 		}
 	})
-
-	// TODO: dump the rest of the metadata? Or enforce servers to conform to a standard?
-	// const restMeta = omit(rest, ['numberOfPages', 'modified'])
 
 	return (
 		<Animated.ScrollView className="flex-1 bg-background" ref={animatedScrollRef}>
@@ -195,6 +202,7 @@ export default function Screen() {
 
 					<View className="flex w-full flex-row items-center gap-2 tablet:max-w-sm tablet:self-center">
 						<Button
+							variant="brand"
 							className="flex-1"
 							roundness="full"
 							onPress={() =>
@@ -286,13 +294,16 @@ export default function Screen() {
 				>
 					{identifier && <InfoRow label="Identifier" value={identifier} longValue />}
 					<InfoRow label="Title" value={title} longValue />
+					{subtitle && <InfoRow label="Subtitle" value={subtitle} longValue />}
 					{description && <LongValue label="Description" value={description} />}
-					{modified && (
-						<InfoRow label="Modified" value={modified.format('MMMM DD, YYYY')} longValue />
-					)}
-					{!!numberOfPages && (
-						<InfoRow label="Number of pages" value={numberOfPages.toString()} longValue />
-					)}
+					{publisher && <InfoRow label="Publisher" value={publisher} />}
+					{published && <InfoRow label="Published" value={published.format('MMMM DD, YYYY')} />}
+					{modified && <InfoRow label="Modified" value={modified.format('MMMM DD, YYYY')} />}
+					{!!numberOfPages && <InfoRow label="Number of pages" value={numberOfPages.toString()} />}
+					{volume != null && <InfoRow label="Volume" value={volume.toString()} />}
+					{issue != null && <InfoRow label="Issue" value={issue.toString()} />}
+					{language && <InfoRow label="Language" value={language} />}
+					{readingDirection && <InfoRow label="Reading direction" value={readingDirection} />}
 				</Card>
 
 				<Card label="Series" listEmptyStyle={{ icon: BookCopy, message: 'No series information' }}>
@@ -328,6 +339,10 @@ export default function Screen() {
 						</View>
 					)}
 				</Card>
+
+				<CreditsSection metadata={metadata} />
+
+				<MetadataBadgeSection label="Subjects" items={subjects} />
 			</View>
 		</Animated.ScrollView>
 	)

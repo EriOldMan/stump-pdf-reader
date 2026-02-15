@@ -11,9 +11,6 @@ type Props = {
 	singleRowThreshold?: number // if <= to this then will render in a single row
 }
 
-// TODO: The spacing here is fucked, too lazy to fix it now. It should align
-// better when used with cards etc, and/or provide props to adjust
-
 export default function MetadataBadgeSection({ label, items, singleRowThreshold = 4 }: Props) {
 	const rows = useMemo(() => {
 		if (items.length <= singleRowThreshold) {
@@ -30,14 +27,12 @@ export default function MetadataBadgeSection({ label, items, singleRowThreshold 
 
 	return (
 		<View className="gap-2">
-			<Text className="px-4 text-lg font-semibold text-foreground-muted">{label}</Text>
+			<Text className="ios:px-4 px-2 text-lg font-semibold text-foreground-muted">{label}</Text>
 
 			<ScrollView
 				horizontal
 				showsHorizontalScrollIndicator={false}
-				contentContainerStyle={{
-					paddingHorizontal: 24,
-				}}
+				contentContainerClassName="ios:px-4 gap-2 px-2"
 			>
 				<View className="gap-2">
 					{rows.map((row, rowIndex) => (
