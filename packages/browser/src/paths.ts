@@ -63,16 +63,16 @@ const paths = {
 			return `${baseUrl}/epub-reader?${searchParams.toString()}`
 		}
 
+		if (page) {
+			searchParams.append('page', page.toString())
+		}
+
 		if (isPdf && !isStreaming) {
 			return `${baseUrl}/pdf-reader?${searchParams.toString()}`
 		}
 
 		if (isAnimated) {
 			searchParams.append('animated', 'true')
-		}
-
-		if (page) {
-			searchParams.append('page', page.toString())
 		}
 
 		return `${baseUrl}/reader?${searchParams.toString()}`

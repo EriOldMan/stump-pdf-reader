@@ -1,7 +1,7 @@
 import { useUpdateMediaProgress } from '@stump/client'
 import { ArrowLeft } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { useNavigate } from 'react-router'
+import { useLocation, useNavigate } from 'react-router'
 import * as pdfjsLib from 'pdfjs-dist'
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
@@ -27,6 +27,7 @@ export default function PDFReader({ id, src, initialPage = 1 }: Props) {
 
 	const { updateReadProgressAsync } = useUpdateMediaProgress(id)
 	const navigate = useNavigate()
+	const location = useLocation()
 	const [showNav, setShowNav] = useState(true)
 	const navTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
@@ -123,6 +124,15 @@ export default function PDFReader({ id, src, initialPage = 1 }: Props) {
 	useEffect(() => {
 		if (totalPages > 0) renderPage(currentPage)
 	}, [currentPage, totalPages, renderPage])
+
+	// Sync current page to URL
+	useEffect(() => {
+		const searchParams = new URLSearchParams(location.search)
+		if (searchParams.get('page') !== currentPage.toString()) {
+			searchParams.set('page', currentPage.toString())
+			navigate(`?${searchParams.toString()}`, { replace: true })
+		}
+	}, [currentPage, navigate, location.search])
 
 	// Keyboard navigation
 	useEffect(() => {

@@ -6,6 +6,7 @@ import { type ComponentPropsWithoutRef, useCallback, useMemo } from 'react'
 
 import paths from '@/paths'
 import { formatBookName, formatBytes } from '@/utils/format'
+import { PDF_EXTENSION, EBOOK_EXTENSION } from '@/utils/patterns'
 import { prefetchMediaPage } from '@/utils/prefetch'
 
 import { EntityCard } from '../entity'
@@ -113,13 +114,28 @@ export default function BookCard({
 			return undefined
 		}
 
-		return readingLink
-			? paths.bookReader(media.id, {
+		const isPdf = media.extension?.match(PDF_EXTENSION)
+		const isEpub = !!media.current_epubcfi || media.extension?.match(EBOOK_EXTENSION)
+
+		if (readingLink) {
+			if (isEpub) {
+				return paths.bookReader(media.id, {
 					epubcfi: media.current_epubcfi,
-					page: media.current_page || undefined,
 				})
-			: paths.bookOverview(media.id)
-	}, [readingLink, media.id, media.current_epubcfi, media.current_page, onSelect])
+			} else if (isPdf) {
+				return paths.bookReader(media.id, {
+					isPdf: true,
+					page: media.current_page || 1,
+				})
+			} else {
+				return paths.bookReader(media.id, {
+					page: media.current_page || 1,
+				})
+			}
+		} else {
+			return paths.bookOverview(media.id)
+		}
+	}, [readingLink, media.id, media.current_epubcfi, media.current_page, media.extension, onSelect])
 
 	const propsOverrides = useMemo(() => {
 		let overrides = (

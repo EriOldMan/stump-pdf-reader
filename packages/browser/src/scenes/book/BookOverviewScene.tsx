@@ -82,7 +82,11 @@ export default function BookOverviewScene() {
 								{media.extension?.match(PDF_EXTENSION) && (
 									<ButtonOrLink
 										variant="outline"
-										href={paths.bookReader(media.id, { isPdf: true, isStreaming: false })}
+										href={paths.bookReader(media.id, {
+											isPdf: true,
+											isStreaming: false,
+											page: media.current_page || 1,
+										})}
 										title="Read with the native PDF viewer"
 										className="w-full md:w-auto"
 									>
