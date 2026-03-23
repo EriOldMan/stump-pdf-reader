@@ -1,5 +1,7 @@
 import { useUpdateMediaProgress } from '@stump/client'
+import { ArrowLeft } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router'
 import * as pdfjsLib from 'pdfjs-dist'
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
@@ -24,6 +26,27 @@ export default function PDFReader({ id, src, initialPage = 1 }: Props) {
 	const [isLoading, setIsLoading] = useState(true)
 
 	const { updateReadProgressAsync } = useUpdateMediaProgress(id)
+	const navigate = useNavigate()
+	const [showNav, setShowNav] = useState(true)
+	const navTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+
+	useEffect(() => {
+		const resetTimeout = () => {
+			setShowNav(true)
+			if (navTimeoutRef.current) clearTimeout(navTimeoutRef.current)
+			navTimeoutRef.current = setTimeout(() => setShowNav(false), 3000)
+		}
+
+		resetTimeout()
+		window.addEventListener('mousemove', resetTimeout)
+		window.addEventListener('keydown', resetTimeout)
+
+		return () => {
+			window.removeEventListener('mousemove', resetTimeout)
+			window.removeEventListener('keydown', resetTimeout)
+			if (navTimeoutRef.current) clearTimeout(navTimeoutRef.current)
+		}
+	}, [])
 
 	// Load the PDF document
 	useEffect(() => {
@@ -130,45 +153,65 @@ export default function PDFReader({ id, src, initialPage = 1 }: Props) {
 	}
 
 	return (
-		<div className="flex h-full w-full flex-col items-center gap-3 overflow-auto py-4">
-			<canvas ref={canvasRef} className="max-w-full shadow-lg" />
+		<div
+			className="relative flex h-full w-full flex-col items-center overflow-auto"
+			onClick={() => setShowNav((prev) => !prev)}
+		>
+			<canvas ref={canvasRef} className="my-8 max-w-full shadow-lg" />
 
-			{/* Page controls */}
-			<div className="flex items-center gap-3 rounded-md bg-gray-800 px-4 py-2 text-white">
+			{/* Top Navigation Bar */}
+			<div
+				className={`fixed left-0 top-0 z-50 flex w-full items-center justify-between bg-black/80 px-4 py-3 text-white transition-transform duration-300 ${
+					showNav ? 'translate-y-0' : '-translate-y-full'
+				}`}
+				onClick={(e) => e.stopPropagation()}
+			>
+				{/* Back button */}
 				<button
-					onClick={() => goTo(currentPage - 1)}
-					disabled={currentPage <= 1}
-					className="disabled:opacity-40"
+					onClick={() => navigate(-1)}
+					className="flex items-center gap-2 rounded-md px-3 py-1.5 hover:bg-white/10"
 				>
-					←
+					<ArrowLeft className="h-5 w-5" />
+					<span className="hidden sm:inline">Back</span>
 				</button>
-				<span className="text-sm">
-					{currentPage} / {totalPages}
-				</span>
-				<button
-					onClick={() => goTo(currentPage + 1)}
-					disabled={currentPage >= totalPages}
-					className="disabled:opacity-40"
-				>
-					→
-				</button>
-			</div>
 
-			{/* Zoom controls */}
-			<div className="flex items-center gap-3 rounded-md bg-gray-800 px-4 py-2 text-white">
-				<button
-					onClick={() => setScale((s) => Math.max(0.5, s - 0.25))}
-					className="disabled:opacity-40"
-				>
-					−
-				</button>
-				<span className="text-sm">{Math.round(scale * 100)}%</span>
-				<button
-					onClick={() => setScale((s) => Math.min(3, s + 0.25))}
-					className="disabled:opacity-40"
-				>
-					+
-				</button>
+				{/* Page controls */}
+				<div className="flex items-center gap-4">
+					<button
+						onClick={() => goTo(currentPage - 1)}
+						disabled={currentPage <= 1}
+						className="rounded px-2 py-1 hover:bg-white/10 disabled:opacity-40"
+					>
+						←
+					</button>
+					<span className="text-sm font-medium">
+						{currentPage} / {totalPages}
+					</span>
+					<button
+						onClick={() => goTo(currentPage + 1)}
+						disabled={currentPage >= totalPages}
+						className="rounded px-2 py-1 hover:bg-white/10 disabled:opacity-40"
+					>
+						→
+					</button>
+				</div>
+
+				{/* Zoom controls */}
+				<div className="flex items-center gap-2">
+					<button
+						onClick={() => setScale((s) => Math.max(0.5, s - 0.25))}
+						className="rounded px-2 py-1 hover:bg-white/10 disabled:opacity-40"
+					>
+						−
+					</button>
+					<span className="w-12 text-center text-sm font-medium">{Math.round(scale * 100)}%</span>
+					<button
+						onClick={() => setScale((s) => Math.min(3, s + 0.25))}
+						className="rounded px-2 py-1 hover:bg-white/10 disabled:opacity-40"
+					>
+						+
+					</button>
+				</div>
 			</div>
 		</div>
 	)

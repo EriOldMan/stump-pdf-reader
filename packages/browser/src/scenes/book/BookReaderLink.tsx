@@ -3,7 +3,7 @@ import { Media } from '@stump/sdk'
 import { useMemo } from 'react'
 
 import paths from '../../paths'
-import { EBOOK_EXTENSION } from '../../utils/patterns'
+import { EBOOK_EXTENSION, PDF_EXTENSION } from '../../utils/patterns'
 
 type Props = {
 	book?: Media
@@ -46,11 +46,18 @@ export default function BookReaderLink({ book }: Props) {
 		if (!book) return undefined
 
 		const { current_epubcfi, extension, id, current_page } = book
+		const isEpub = extension.match(EBOOK_EXTENSION)
+		const isPdf = extension.match(PDF_EXTENSION)
 
-		if (current_epubcfi || extension.match(EBOOK_EXTENSION)) {
+		if (current_epubcfi || isEpub) {
 			return paths.bookReader(id, {
 				epubcfi: isReadAgain ? undefined : current_epubcfi,
 				isEpub: true,
+			})
+		} else if (isPdf) {
+			return paths.bookReader(id, {
+				page: isReadAgain ? 1 : current_page || 1,
+				isPdf: true,
 			})
 		} else {
 			return paths.bookReader(id, { page: isReadAgain ? 1 : current_page || 1 })

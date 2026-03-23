@@ -5,7 +5,7 @@ import { useCallback, useMemo } from 'react'
 import { useNavigate } from 'react-router'
 
 import paths from '@/paths'
-import { EBOOK_EXTENSION } from '@/utils/patterns'
+import { EBOOK_EXTENSION, PDF_EXTENSION } from '@/utils/patterns'
 
 type Props = {
 	book: Media
@@ -44,13 +44,17 @@ export default function BookReaderDropdown({ book }: Props) {
 	 * The URL to use when the user wants to continue reading from where they last left off
 	 */
 	const continueReadingLink = useMemo(() => {
-		const { current_epubcfi, id, current_page } = book
+		const { current_epubcfi, id, current_page, extension } = book
+		const isEpub = extension.match(EBOOK_EXTENSION)
+		const isPdf = extension.match(PDF_EXTENSION)
 
-		if (current_epubcfi) {
+		if (current_epubcfi || isEpub) {
 			return paths.bookReader(id, {
-				epubcfi: current_epubcfi,
+				epubcfi: current_epubcfi || undefined,
 				isEpub: true,
 			})
+		} else if (isPdf && !!current_page && current_page > 0) {
+			return paths.bookReader(id, { page: current_page, isPdf: true })
 		} else if (!!current_page && current_page > 0) {
 			return paths.bookReader(id, { page: current_page })
 		} else {
@@ -64,11 +68,19 @@ export default function BookReaderDropdown({ book }: Props) {
 	const getReadFromBeginningLink = useCallback(
 		(incognito: boolean) => {
 			const { id, extension } = book
+			const isEpub = extension.match(EBOOK_EXTENSION)
+			const isPdf = extension.match(PDF_EXTENSION)
 
-			if (extension.match(EBOOK_EXTENSION)) {
+			if (isEpub) {
 				return paths.bookReader(id, {
 					isEpub: true,
 					isIncognito: incognito || undefined,
+				})
+			} else if (isPdf) {
+				return paths.bookReader(id, {
+					isIncognito: incognito || undefined,
+					page: 1,
+					isPdf: true,
 				})
 			} else {
 				return paths.bookReader(id, { isIncognito: incognito || undefined, page: 1 })
@@ -87,11 +99,18 @@ export default function BookReaderDropdown({ book }: Props) {
 		if (!book) return undefined
 
 		const { current_epubcfi, extension, id, current_page } = book
+		const isEpub = extension.match(EBOOK_EXTENSION)
+		const isPdf = extension.match(PDF_EXTENSION)
 
-		if (current_epubcfi || extension.match(EBOOK_EXTENSION)) {
+		if (current_epubcfi || isEpub) {
 			return paths.bookReader(id, {
 				epubcfi: isReadAgain ? undefined : current_epubcfi,
 				isEpub: true,
+			})
+		} else if (isPdf) {
+			return paths.bookReader(id, {
+				page: isReadAgain ? 1 : current_page || 1,
+				isPdf: true,
 			})
 		} else {
 			return paths.bookReader(id, { page: isReadAgain ? 1 : current_page || 1 })

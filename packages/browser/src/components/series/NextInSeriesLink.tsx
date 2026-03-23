@@ -2,7 +2,7 @@ import { useUpNextInSeries } from '@stump/client'
 import { ButtonOrLink } from '@stump/components'
 
 import paths from '../../paths'
-import { EBOOK_EXTENSION } from '../../utils/patterns'
+import { EBOOK_EXTENSION, PDF_EXTENSION } from '../../utils/patterns'
 
 type Props = {
 	seriesId: string
@@ -29,10 +29,18 @@ export default function NextInSeriesLink({ seriesId, title, ...props }: Props) {
 	}
 
 	const getHref = () => {
-		if (media.current_epubcfi || media.extension?.match(EBOOK_EXTENSION)) {
+		const isEpub = media.extension?.match(EBOOK_EXTENSION)
+		const isPdf = media.extension?.match(PDF_EXTENSION)
+
+		if (media.current_epubcfi || isEpub) {
 			return paths.bookReader(media.id, {
 				epubcfi: media.current_epubcfi,
 				isEpub: true,
+			})
+		} else if (isPdf) {
+			return paths.bookReader(media?.id || '', {
+				page: media?.current_page || 1,
+				isPdf: true,
 			})
 		} else {
 			return paths.bookReader(media?.id || '', { page: media?.current_page || 1 })
