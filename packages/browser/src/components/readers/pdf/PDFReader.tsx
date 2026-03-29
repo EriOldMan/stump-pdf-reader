@@ -29,24 +29,13 @@ export default function PDFReader({ id, src, initialPage = 1 }: Props) {
 	const navigate = useNavigate()
 	const location = useLocation()
 	const [showNav, setShowNav] = useState(true)
-	const navTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
+	// Auto-hide the bar once after 3 seconds on initial load.
+	// Users can tap/click to explicitly toggle it afterwards without it
+	// aggressively auto-hiding while they are trying to use it.
 	useEffect(() => {
-		const resetTimeout = () => {
-			setShowNav(true)
-			if (navTimeoutRef.current) clearTimeout(navTimeoutRef.current)
-			navTimeoutRef.current = setTimeout(() => setShowNav(false), 3000)
-		}
-
-		resetTimeout()
-		window.addEventListener('mousemove', resetTimeout)
-		window.addEventListener('keydown', resetTimeout)
-
-		return () => {
-			window.removeEventListener('mousemove', resetTimeout)
-			window.removeEventListener('keydown', resetTimeout)
-			if (navTimeoutRef.current) clearTimeout(navTimeoutRef.current)
-		}
+		const timer = setTimeout(() => setShowNav(false), 3000)
+		return () => clearTimeout(timer)
 	}, [])
 
 	// Load the PDF document
