@@ -167,7 +167,7 @@ export default function PDFReader({ id, src, initialPage = 1 }: Props) {
 			className="relative flex h-full w-full flex-col items-center overflow-auto"
 			onClick={() => setShowNav((prev) => !prev)}
 		>
-			<canvas ref={canvasRef} className="my-8 max-w-full shadow-lg" />
+			<canvas ref={canvasRef} className="my-8 shadow-lg" />
 
 			{/* Top Navigation Bar */}
 			<div
