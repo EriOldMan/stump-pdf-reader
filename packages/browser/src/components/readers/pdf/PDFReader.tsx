@@ -11,6 +11,7 @@ import {
 } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router'
+import { useSwipeable } from 'react-swipeable'
 import * as pdfjsLib from 'pdfjs-dist'
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
@@ -321,6 +322,26 @@ export default function PDFReader({ id, src, initialPage = 1 }: Props) {
 
 	// No fallback timer needed — scroll tracking is event-driven.
 
+	const swipeHandlers = useSwipeable({
+		onSwipedLeft: () => {
+			if (isSeamless && orientation === 'horizontal') return
+			goTo(currentPage + 1)
+		},
+		onSwipedRight: () => {
+			if (isSeamless && orientation === 'horizontal') return
+			goTo(currentPage - 1)
+		},
+		onSwipedUp: () => {
+			if (isSeamless && orientation === 'vertical') return
+			goTo(currentPage + 1)
+		},
+		onSwipedDown: () => {
+			if (isSeamless && orientation === 'vertical') return
+			goTo(currentPage - 1)
+		},
+		preventScrollOnSwipe: false,
+	})
+
 	if (isLoading) {
 		return (
 			<div className="flex h-full w-full items-center justify-center">
@@ -331,8 +352,13 @@ export default function PDFReader({ id, src, initialPage = 1 }: Props) {
 
 	return (
 		<div
+			{...swipeHandlers}
 			className="relative h-full w-full overflow-hidden bg-zinc-900 text-white"
-			onClick={() => setShowNav((prev) => !prev)}
+			onClick={(e) => {
+				// Prevent swipe events from triggering click
+				if ((e.target as HTMLElement).closest('button')) return
+				setShowNav((prev) => !prev)
+			}}
 		>
 			<div
 				ref={containerRef}
