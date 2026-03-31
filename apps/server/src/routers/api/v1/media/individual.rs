@@ -571,11 +571,29 @@ pub(crate) async fn delete_media_progress(
 
 	let deleted_session = client
 		.active_reading_session()
-		.delete(active_reading_session::user_id_media_id(user_id, id))
+		.delete(active_reading_session::user_id_media_id(
+			user_id.clone(),
+			id.clone(),
+		))
 		.exec()
-		.await?;
+		.await
+		.ok();
 
-	tracing::trace!(?deleted_session, "Deleted reading session");
+	let deleted_finished = client
+		.finished_reading_session()
+		.delete_many(vec![
+			finished_reading_session::user_id::equals(user_id),
+			finished_reading_session::media_id::equals(id),
+		])
+		.exec()
+		.await
+		.ok();
+
+	tracing::trace!(
+		?deleted_session,
+		?deleted_finished,
+		"Deleted reading session(s)"
+	);
 
 	Ok(Json(MediaIsComplete::default()))
 }
