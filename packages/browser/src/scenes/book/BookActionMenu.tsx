@@ -6,7 +6,6 @@ import { useQueryClient } from '@tanstack/react-query'
 import {
 	BookMinus,
 	BookOpenCheck,
-	BookX,
 	DownloadCloud,
 	EllipsisVertical,
 	Send,
@@ -19,7 +18,6 @@ import { toast } from 'sonner'
 import { useAppContext } from '@/context'
 import { usePaths } from '@/paths'
 
-import DeleteHistoryConfirmation from './DeleteHistoryConfirmation'
 import EmailBookDialog from './EmailBookDialog'
 
 const completedMutation = graphql(`
@@ -33,14 +31,6 @@ const completedMutation = graphql(`
 const deleteMutation = graphql(`
 	mutation BookActionMenuDeleteSession($id: ID!) {
 		deleteMediaProgress(id: $id) {
-			__typename
-		}
-	}
-`)
-
-const deleteHistoryMutation = graphql(`
-	mutation BookActionMenuDeleteHistory($id: ID!) {
-		deleteMediaReadHistory(id: $id) {
 			__typename
 		}
 	}
@@ -67,28 +57,20 @@ export default function BookActionMenu({ book }: Props) {
 			toast.error('Failed to update book completion status')
 		},
 	})
-	const { mutate: deleteCurrentSession } = useGraphQLMutation(deleteMutation, {
+	const { mutate: deleteProgress } = useGraphQLMutation(deleteMutation, {
 		onSuccess,
 		onError: (error) => {
 			console.error(error)
-			toast.error('Failed to delete current session')
-		},
-	})
-	const { mutate: deleteReadHistory } = useGraphQLMutation(deleteHistoryMutation, {
-		onSuccess,
-		onError: (error) => {
-			console.error(error)
-			toast.error('Failed to delete read history')
+			toast.error('Failed to mark book as unread')
 		},
 	})
 
 	const actions = useMemo(
 		() => ({
 			completeBook,
-			deleteCurrentSession,
-			deleteReadHistory,
+			deleteProgress,
 		}),
-		[completeBook, deleteCurrentSession, deleteReadHistory],
+		[completeBook, deleteProgress],
 	)
 
 	const progression = useMemo(
@@ -101,7 +83,6 @@ export default function BookActionMenu({ book }: Props) {
 	)
 
 	const [showEmailDialog, setShowEmailDialog] = useState(false)
-	const [showDeleteHistoryConfirmation, setShowDeleteHistoryConfirmation] = useState(false)
 
 	const downloadRef = useRef<HTMLAnchorElement>(null)
 	const paths = usePaths()
@@ -124,24 +105,13 @@ export default function BookActionMenu({ book }: Props) {
 									},
 								]
 							: []),
-						...(progression.isReading
+						...(progression.isReading || progression.isPreviouslyCompleted
 							? [
 									{
-										label: 'Clear progress',
+										label: 'Mark as unread',
 										leftIcon: <BookMinus className="mr-2 h-4 w-4" />,
 										onClick: () => {
-											actions.deleteCurrentSession({ id: book.id })
-										},
-									},
-								]
-							: []),
-						...(progression.isPreviouslyCompleted
-							? [
-									{
-										label: 'Delete history',
-										leftIcon: <BookX className="mr-2 h-4 w-4" />,
-										onClick: () => {
-											setShowDeleteHistoryConfirmation(true)
+											actions.deleteProgress({ id: book.id })
 										},
 									},
 								]
@@ -196,54 +166,6 @@ export default function BookActionMenu({ book }: Props) {
 				mediaId={book.id}
 				isOpen={showEmailDialog}
 				onClose={() => setShowEmailDialog(false)}
-			/>
-
-			<DeleteHistoryConfirmation
-				isOpen={showDeleteHistoryConfirmation}
-				onCancel={() => setShowDeleteHistoryConfirmation(false)}
-				onConfirm={() => {
-					actions.deleteReadHistory({ id: book.id })
-					setShowDeleteHistoryConfirmation(false)
-				}}
-			/>
-
-			<a
-				ref={downloadRef}
-				className="invisible hidden"
-				href={sdk.media.downloadURL(book.id)}
-				download
-			/>
-
-			<DropdownMenu
-				align="end"
-				contentWrapperClassName="w-18 md:mt-1"
-				trigger={
-					<Button variant="ghost" size="icon">
-						<EllipsisVertical className="h-4 w-4" />
-					</Button>
-				}
-				groups={groups}
-			/>
-		</>
-	)
-}
-	)
-
-	return (
-		<>
-			<EmailBookDialog
-				mediaId={book.id}
-				isOpen={showEmailDialog}
-				onClose={() => setShowEmailDialog(false)}
-			/>
-
-			<DeleteHistoryConfirmation
-				isOpen={showDeleteHistoryConfirmation}
-				onCancel={() => setShowDeleteHistoryConfirmation(false)}
-				onConfirm={() => {
-					actions.deleteReadHistory({ id: book.id })
-					setShowDeleteHistoryConfirmation(false)
-				}}
 			/>
 
 			<a

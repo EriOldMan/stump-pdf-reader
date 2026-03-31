@@ -4,13 +4,8 @@ import { ChevronDown } from 'lucide-react'
 import { useCallback, useMemo } from 'react'
 import { useNavigate } from 'react-router'
 
-<<<<<<< HEAD
-import paths from '@/paths'
-import { EBOOK_EXTENSION, PDF_EXTENSION } from '@/utils/patterns'
-=======
 import { usePaths } from '@/paths'
-import { EBOOK_EXTENSION } from '@/utils/patterns'
->>>>>>> main
+import { EBOOK_EXTENSION, PDF_EXTENSION } from '@/utils/patterns'
 
 type Props = {
 	book: BookCardFragment
@@ -49,33 +44,21 @@ export default function BookReaderDropdown({ book }: Props) {
 	 * The URL to use when the user wants to continue reading from where they last left off
 	 */
 	const continueReadingLink = useMemo(() => {
-<<<<<<< HEAD
-		const { current_epubcfi, id, current_page, extension } = book
-		const isEpub = extension.match(EBOOK_EXTENSION)
-		const isPdf = extension.match(PDF_EXTENSION)
-
-		if (current_epubcfi || isEpub) {
-			return paths.bookReader(id, {
-				epubcfi: current_epubcfi || undefined,
-				isEpub: true,
-			})
-		} else if (isPdf && !!current_page && current_page > 0) {
-			return paths.bookReader(id, { page: current_page, isPdf: true })
-		} else if (!!current_page && current_page > 0) {
-			return paths.bookReader(id, { page: current_page })
-=======
 		if (!book.readProgress) return undefined
 
 		const { page, epubcfi } = book.readProgress
+		const isEpub = book.extension.match(EBOOK_EXTENSION)
+		const isPdf = book.extension.match(PDF_EXTENSION)
 
-		if (epubcfi) {
+		if (epubcfi || isEpub) {
 			return paths.bookReader(book.id, {
-				epubcfi,
+				epubcfi: epubcfi || undefined,
 				isEpub: true,
 			})
+		} else if (isPdf && !!page && page > 0) {
+			return paths.bookReader(book.id, { page, isPdf: true })
 		} else if (!!page && page > 0) {
 			return paths.bookReader(book.id, { page })
->>>>>>> main
 		} else {
 			return undefined
 		}
@@ -116,25 +99,18 @@ export default function BookReaderDropdown({ book }: Props) {
 	 */
 	const readUrl = useMemo(() => {
 		const { id, readProgress, extension } = book
-
-<<<<<<< HEAD
-		const { current_epubcfi, extension, id, current_page } = book
+		const { epubcfi, page } = readProgress || {}
 		const isEpub = extension.match(EBOOK_EXTENSION)
 		const isPdf = extension.match(PDF_EXTENSION)
 
-		if (current_epubcfi || isEpub) {
-=======
-		const { epubcfi, page } = readProgress || {}
-
-		if (epubcfi || extension.match(EBOOK_EXTENSION)) {
->>>>>>> main
+		if (epubcfi || isEpub) {
 			return paths.bookReader(id, {
 				epubcfi: isReadAgain ? undefined : epubcfi,
 				isEpub: true,
 			})
 		} else if (isPdf) {
 			return paths.bookReader(id, {
-				page: isReadAgain ? 1 : current_page || 1,
+				page: isReadAgain ? 1 : page || 1,
 				isPdf: true,
 			})
 		} else {

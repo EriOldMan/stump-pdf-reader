@@ -590,27 +590,3 @@ async fn get_book_pages(book_id: String, conn: &DatabaseConnection) -> Result<i3
 		.ok_or("Media not found")?;
 	Ok(pages)
 }
-	Ok(finished_reading_session)
-}
-
-fn compute_page_based_percentage(current_page: i32, pages: i32) -> Decimal {
-	if pages <= 0 {
-		Decimal::new(0, 0)
-	} else {
-		let percentage =
-			Decimal::new(current_page as i64, 0) / Decimal::new(pages as i64, 0);
-		// Cannot be negative and cannot be more than 100%
-		percentage.clamp(Decimal::new(0, 0), Decimal::new(100, 0))
-	}
-}
-
-async fn get_book_pages(book_id: String, conn: &DatabaseConnection) -> Result<i32> {
-	let pages: i32 = media::Entity::find_by_id(book_id)
-		.select_only()
-		.columns(vec![media::Column::Pages])
-		.into_tuple()
-		.one(conn)
-		.await?
-		.ok_or("Media not found")?;
-	Ok(pages)
-}

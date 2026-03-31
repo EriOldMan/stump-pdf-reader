@@ -1,13 +1,14 @@
-import { useUpdateMediaProgress } from '@stump/client'
+import { useGraphQLMutation, useSDK } from '@stump/client'
+import { graphql } from '@stump/graphql'
 import {
 	ArrowLeft,
-	Maximize2,
-	Scroll,
-	Files,
-	ArrowUpDown,
 	ArrowLeftRight,
+	ArrowUpDown,
+	Files,
+	Maximize2,
 	Minus,
 	Plus,
+	Scroll,
 } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router'
@@ -18,6 +19,14 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
 	'pdfjs-dist/build/pdf.worker.min.mjs',
 	import.meta.url,
 ).toString()
+
+const mutation = graphql(`
+	mutation PDFReaderUpdateProgress($id: ID!, $input: MediaProgressInput!) {
+		updateMediaProgress(id: $id, input: $input) {
+			__typename
+		}
+	}
+`)
 
 type Props = {
 	id: string
@@ -144,7 +153,7 @@ export default function PDFReader({ id, src, initialPage = 1 }: Props) {
 	const [scale, setScale] = useState(1.5)
 	const [isLoading, setIsLoading] = useState(true)
 
-	const { updateReadProgressAsync } = useUpdateMediaProgress(id)
+	const { mutate: updateProgress } = useGraphQLMutation(mutation)
 	const navigate = useNavigate()
 	const location = useLocation()
 
@@ -198,7 +207,7 @@ export default function PDFReader({ id, src, initialPage = 1 }: Props) {
 		if (maxArea > 0) {
 			setCurrentPage((prevPage) => (prevPage !== bestPage ? bestPage : prevPage))
 		}
-	}, [isSeamless])
+	}, [isSeamless, currentPage])
 
 	// Attach a global scroll capturing listener to update current page.
 	// This works even if the parent structure (e.g. body or main) is what actually scrolls.
@@ -253,15 +262,12 @@ export default function PDFReader({ id, src, initialPage = 1 }: Props) {
 		}
 	}, [])
 
-	// Stable ref for updateReadProgressAsync so it doesn't invalidate callbacks
-	const updateProgressRef = useRef(updateReadProgressAsync)
-	useEffect(() => {
-		updateProgressRef.current = updateReadProgressAsync
-	}, [updateReadProgressAsync])
-
-	const onPageRenderSuccess = useCallback((pageNum: number) => {
-		updateProgressRef.current({ page: pageNum })
-	}, []) // truly stable — no deps
+	const onPageRenderSuccess = useCallback(
+		(pageNum: number) => {
+			updateProgress({ id, input: { page: pageNum } })
+		},
+		[id, updateProgress],
+	)
 
 	// Sync current page to URL
 	useEffect(() => {
@@ -380,9 +386,6 @@ export default function PDFReader({ id, src, initialPage = 1 }: Props) {
 						) : (
 							Array.from({ length: totalPages }, (_, i) => {
 								const pageNum = i + 1
-								const isTarget =
-									pageNum === (seamlessTargetPage.current ?? -1) ||
-									(seamlessTargetPage.current === null && pageNum === currentPage)
 								return (
 									<PDFPage
 										key={pageNum}

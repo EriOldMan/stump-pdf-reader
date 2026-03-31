@@ -4,19 +4,13 @@ import { getColor, serialize, set } from 'colorjs.io/fn'
 import pluralize from 'pluralize'
 import { memo, useCallback, useMemo } from 'react'
 
-<<<<<<< HEAD
-import paths from '@/paths'
-import { formatBookName, formatBytes } from '@/utils/format'
-import { PDF_EXTENSION, EBOOK_EXTENSION } from '@/utils/patterns'
-import { prefetchMediaPage } from '@/utils/prefetch'
-=======
 import { Link } from '@/context'
 import { usePreferences } from '@/hooks/usePreferences'
 import { useTheme } from '@/hooks/useTheme'
 import { usePaths } from '@/paths'
 import { usePrefetchBooksAfterCursor } from '@/scenes/book/BooksAfterCursor'
 import { formatBytes } from '@/utils/format'
->>>>>>> main
+import { PDF_EXTENSION } from '@/utils/patterns'
 
 import { ThumbnailImage } from '../thumbnail/ThumbnailImage'
 import { usePrefetchBook } from './useBookOverview'
@@ -84,7 +78,7 @@ const BookCard = memo(function BookCard({
 	)
 
 	const progress = useMemo(() => {
-		if (!data.readProgress && !data.readHistory) {
+		if (!data.readProgress && !data.readHistory?.length) {
 			return null
 		} else if (data.readProgress) {
 			const { epubcfi, percentageCompleted, page } = data.readProgress
@@ -119,10 +113,11 @@ const BookCard = memo(function BookCard({
 		return readingLink
 			? paths.bookReader(data.id, {
 					epubcfi: data.readProgress?.epubcfi,
+					isPdf: !!data.extension.match(PDF_EXTENSION),
 					page: data.readProgress?.page ?? undefined,
 				})
 			: paths.bookOverview(data.id)
-	}, [readingLink, data.id, onSelect, data.readProgress, paths])
+	}, [readingLink, data.id, onSelect, data.readProgress, data.extension, paths])
 
 	const isMissing = data.status === 'MISSING'
 	const isEbookProgress = !!data.readProgress?.epubcfi
@@ -181,68 +176,11 @@ const BookCard = memo(function BookCard({
 			})
 			return serialize(color, { format: 'hex' })
 		}
-<<<<<<< HEAD
-
-		return null
-	}, [isCoverOnly, media])
-
-	const href = useMemo(() => {
-		if (onSelect) {
-			return undefined
-		}
-
-		const isPdf = media.extension?.match(PDF_EXTENSION)
-		const isEpub = !!media.current_epubcfi || media.extension?.match(EBOOK_EXTENSION)
-
-		if (readingLink) {
-			if (isEpub) {
-				return paths.bookReader(media.id, {
-					epubcfi: media.current_epubcfi,
-				})
-			} else if (isPdf) {
-				return paths.bookReader(media.id, {
-					isPdf: true,
-					page: media.current_page || 1,
-				})
-			} else {
-				return paths.bookReader(media.id, {
-					page: media.current_page || 1,
-				})
-			}
-		} else {
-			return paths.bookOverview(media.id)
-		}
-	}, [readingLink, media.id, media.current_epubcfi, media.current_page, media.extension, onSelect])
-
-	const propsOverrides = useMemo(() => {
-		let overrides = (
-			isCoverOnly
-				? {
-						className: 'flex-shrink-0 flex-auto',
-						href: undefined,
-						progress: undefined,
-						subtitle: undefined,
-						title: undefined,
-					}
-				: {}
-		) as Partial<EntityCardProps>
-
-		if (onSelect) {
-			overrides = {
-				...overrides,
-				onClick: () => onSelect(media),
-			}
-		}
-
-		return overrides
-	}, [onSelect, isCoverOnly, media])
-=======
 		return (
 			getThemeColor('thumbnail.stack.series') ??
 			(isDarkVariant ? 'oklch(0.35 0.01 52.14)' : 'oklch(0.9 0.01 52.14)')
 		)
 	}, [thumbnailAverageColor, isDarkVariant, getThemeColor])
->>>>>>> main
 
 	return (
 		// @ts-expect-error: It's okay
