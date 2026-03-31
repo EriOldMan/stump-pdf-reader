@@ -1,4 +1,42 @@
+import {
+	clone as cloneColor,
+	ColorSpace,
+	getColor,
+	OKLCH,
+	serialize,
+	set as setColor,
+	sRGB,
+	to,
+} from 'colorjs.io/fn'
+import clone from 'lodash/cloneDeep'
+import setProperty from 'lodash/set'
+import { Platform } from 'react-native'
+import { Easing, WithTimingConfig } from 'react-native-reanimated'
+
+import { usePreferencesStore } from '~/stores'
+
 import { useColorScheme } from './useColorScheme'
+
+ColorSpace.register(sRGB)
+ColorSpace.register(OKLCH)
+
+export const ENABLE_LARGE_HEADER = Platform.select({
+	// iOS 26+ has a bug that causes freezes when using large headers
+	ios: typeof Platform.Version === 'number' ? Platform.Version < 26 : Number(Platform.Version) < 26,
+	default: true,
+})
+
+export const IS_IOS_24_PLUS = Platform.OS === 'ios' && parseInt(Platform.Version, 10) >= 24
+
+export const ON_END_REACHED_THRESHOLD = Platform.OS === 'ios' ? 0.75 : 0.6
+
+export const CONTROLS_TIMING_CONFIG: WithTimingConfig = {
+	// Note: It seems to take the ios status bar 350ms to fade in and out,
+	// and Easing.inOut(Easing.quad) seems to match the easing close enough.
+	// Android could have anything so this is fine.
+	duration: 350,
+	easing: Easing.inOut(Easing.quad),
+}
 
 const light = {
 	background: {
@@ -63,6 +101,30 @@ const light = {
 			fill: '#ffffff',
 		},
 		subtle: '#26272a',
+	},
+	dots: {
+		active: '#414347',
+		inactive: '#d3d5d7',
+	},
+	header: {
+		start: 'hsla(0, 0%, 100%, 0.6)',
+		end: 'hsla(0, 0%, 100%, 0)',
+	},
+	thumbnail: {
+		border: 'rgba(31, 33, 35, 0.10)',
+		placeholder: '#F2F2F2',
+		stack: {
+			series: '#d4b7a7',
+			library: ['#ad9282', '#d4b7a7'],
+		},
+	},
+	slider: {
+		minimumTrack: '#c48259',
+		maximumTrack: '#d3d5d7',
+	},
+	sheet: {
+		background: '#ffffff',
+		grabber: '#ccc',
 	},
 }
 
@@ -132,6 +194,30 @@ const dark: Theme = {
 		},
 		subtle: '#e9eaeb',
 	},
+	dots: {
+		active: '#f5f3ef',
+		inactive: '#898d94',
+	},
+	header: {
+		start: 'hsla(0, 0%, 0%, 0.8)',
+		end: 'hsla(0, 0%, 0%, 0)',
+	},
+	thumbnail: {
+		border: 'rgba(233, 234, 235, 0.10)',
+		placeholder: '#1C1C1C',
+		stack: {
+			series: '#543c2f',
+			library: ['#331e11', '#543c2f'],
+		},
+	},
+	slider: {
+		minimumTrack: '#cf9977',
+		maximumTrack: '#292c30',
+	},
+	sheet: {
+		background: '#000000',
+		grabber: '#333',
+	},
 }
 
 export const COLORS = {
@@ -141,7 +227,32 @@ export const COLORS = {
 
 export const useColors = () => {
 	const { isDarkColorScheme } = useColorScheme()
-	return isDarkColorScheme ? dark : light
+	const accentColor = usePreferencesStore((state) => state.accentColor)
+	const resolvedTheme = clone(isDarkColorScheme ? dark : light)
+
+	if (accentColor) {
+		const color = getColor(accentColor)
+
+		setProperty(resolvedTheme, 'foreground.brand', accentColor)
+		setProperty(resolvedTheme, 'fill.brand.DEFAULT', accentColor)
+		setProperty(resolvedTheme, 'slider.minimumTrack', accentColor)
+
+		const hoverColor = cloneColor(color)
+		setColor(hoverColor, { 'oklch.l': (l) => l + (isDarkColorScheme ? 0.08 : -0.08) })
+		setProperty(resolvedTheme, 'fill.brand.hover', serialize(hoverColor, { format: 'hex' }))
+
+		const secondaryColor = cloneColor(color)
+		secondaryColor.alpha = isDarkColorScheme ? 0.21 : 0.15
+		setProperty(resolvedTheme, 'fill.brand.secondary', serialize(secondaryColor, { format: 'hex' }))
+
+		const oklchColor = to(color, OKLCH)
+		const lightness = oklchColor.coords[0]
+
+		const contrastColor = lightness > 0.6 ? '#161719' : '#ffffff'
+		setProperty(resolvedTheme, 'foreground.on.fill', contrastColor)
+	}
+
+	return resolvedTheme
 }
 
 export const NAV_THEME = {

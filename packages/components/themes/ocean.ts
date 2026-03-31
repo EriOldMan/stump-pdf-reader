@@ -81,4 +81,22 @@ export const ocean = {
 			secondary: '#1B6B7D',
 		},
 	},
+	scrollbar: {
+		DEFAULT: '#0A3644',
+		thumb: {
+			DEFAULT: 'hsla(0, 0%, 100%, 0.4)',
+			hover: 'hsla(0, 0%, 100%, 0.3)',
+		},
+	},
+	thumbnail: {
+		border: 'rgba(233, 234, 235, 0.10)',
+		placeholder: '#165564',
+		stack: {
+			series: '#0A9396',
+			library: {
+				start: '#125A6D',
+				end: '#227E95',
+			},
+		},
+	},
 } satisfies StumpTheme

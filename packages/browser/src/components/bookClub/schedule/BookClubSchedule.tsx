@@ -1,5 +1,5 @@
 import { ButtonOrLink, cn, Heading, ScrollArea, Text } from '@stump/components'
-import dayjs from 'dayjs'
+import { addDays, differenceInDays, isAfter, isBefore } from 'date-fns'
 import { useMemo } from 'react'
 import AutoSizer from 'react-virtualized-auto-sizer'
 import { useMediaMatch, useToggle } from 'rooks'
@@ -30,7 +30,7 @@ export default function BookClubSchedule() {
 	const scheduleBooks = useMemo(
 		() =>
 			(bookClub.schedule?.books || []).toSorted((a, b) =>
-				dayjs(b.start_at).diff(dayjs(a.start_at)),
+				differenceInDays(new Date(b.startAt), new Date(a.startAt)),
 			),
 		[bookClub.schedule?.books],
 	)
@@ -40,10 +40,11 @@ export default function BookClubSchedule() {
 	const currentBooks = useMemo(
 		() =>
 			scheduleBooks.filter((book) => {
-				const adjustedEnd = book.discussion_duration_days
-					? dayjs(book.end_at).add(book.discussion_duration_days, 'day')
+				const adjustedEnd = book.discussionDurationDays
+					? addDays(new Date(book.endAt), book.discussionDurationDays)
 					: null
-				return dayjs().isBefore(adjustedEnd) && dayjs().isAfter(dayjs(book.start_at))
+				const now = new Date()
+				return adjustedEnd && isBefore(now, adjustedEnd) && isAfter(now, new Date(book.startAt))
 			}),
 		[scheduleBooks],
 	)

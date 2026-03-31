@@ -1,4 +1,4 @@
-import { View } from 'react-native'
+import { Platform, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 
 import { ContactInformation, SupportInformation } from '~/components/appSettings'
@@ -6,56 +6,61 @@ import { AppDataUsageLink } from '~/components/appSettings/management'
 import {
 	AppLanguage,
 	AppTheme,
-	CachePolicySelect,
+	AutoSyncLocalData,
 	DefaultServer,
+	DeleteDatabase,
+	ImageCacheActions,
 	MaskURLs,
+	PerformanceMonitor,
+	PreferNativePdf,
 	ReaderSettingsLink,
 	ReduceAnimations,
+	ThumbnailPlaceholder,
+	ThumbnailRatio,
 } from '~/components/appSettings/preferences'
+import AppPrimaryColor from '~/components/appSettings/preferences/AppPrimaryColor'
+import DisableDismissGesture from '~/components/appSettings/preferences/DisableDismissGesture'
 import { StumpEnabled } from '~/components/appSettings/stump'
-import { Text } from '~/components/ui/text'
+import { Card } from '~/components/ui'
 
 export default function Screen() {
 	return (
-		<ScrollView className="flex-1 bg-background">
-			<View className="flex-1 gap-8 bg-background p-6">
-				<View>
-					<Text className="mb-3 text-foreground-muted">Preferences</Text>
+		<ScrollView className="flex-1 bg-background" contentInsetAdjustmentBehavior="automatic">
+			<View className="flex-1 gap-8 bg-background p-4 tablet:p-6">
+				<Card label="Preferences">
 					<AppTheme />
+					<AppPrimaryColor />
 					<AppLanguage />
 					<DefaultServer />
-				</View>
+					<ThumbnailRatio />
+					<ThumbnailPlaceholder />
+				</Card>
 
-				<View>
-					<Text className="mb-3 text-foreground-muted">Reading</Text>
-
+				<Card label="Reading">
+					<PreferNativePdf />
+					{Platform.OS === 'ios' && <DisableDismissGesture />}
 					<ReaderSettingsLink />
-				</View>
+				</Card>
 
-				<View>
-					<Text className="mb-3 text-foreground-muted">Stump</Text>
-
-					<View className="mb-2 rounded-xl bg-fill-info-secondary p-2 tablet:p-3">
-						<Text className="text-fill-info">
-							Stump features are optional, you can completely turn them off if you just want OPDS
-							support
-						</Text>
-					</View>
-
+				<Card
+					label="Stump"
+					description="Stump features are optional, you can completely turn them off if you just want OPDS support"
+				>
 					<StumpEnabled />
-				</View>
+					<AutoSyncLocalData />
+				</Card>
 
-				<View>
-					<Text className="mb-3 text-foreground-muted">Management</Text>
+				<Card label="Management">
 					<AppDataUsageLink />
-				</View>
+				</Card>
 
-				<View>
-					<Text className="mb-3 text-foreground-muted">Debug</Text>
-					<CachePolicySelect />
+				<Card label="Debug">
+					<ImageCacheActions />
+					{__DEV__ && <DeleteDatabase />}
+					<PerformanceMonitor />
 					<ReduceAnimations />
 					<MaskURLs />
-				</View>
+				</Card>
 
 				<ContactInformation />
 

@@ -1,62 +1,61 @@
-import { useInfiniteQuery, useSDK } from '@stump/client'
-import { OPDSFeed } from '@stump/sdk'
-import { useRouter } from 'expo-router'
+import { FlashList } from '@shopify/flash-list'
+import { useSDK } from '@stump/client'
+import { OPDSFeed, resolveUrl } from '@stump/sdk'
+import { keepPreviousData, useInfiniteQuery } from '@tanstack/react-query'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { Pressable, View } from 'react-native'
-import { FlatGrid } from 'react-native-super-grid'
+import { View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
-import { useDisplay } from '~/lib/hooks'
-import { cn } from '~/lib/utils'
+import { ON_END_REACHED_THRESHOLD } from '~/lib/constants'
 
 import { useActiveServer } from '../activeServer'
-import { Image } from '../Image'
+import { GridImageItem } from '../grid'
+import { useGridItemSize } from '../grid/useGridItemSize'
 import RefreshControl from '../RefreshControl'
-import { Text } from '../ui'
-import FeedTitle from './FeedTitle'
 import { getPublicationThumbnailURL } from './utils'
 
 type Props = {
 	feed: OPDSFeed
 	onRefresh?: () => void
 	isRefreshing?: boolean
+	ListHeaderComponent?: React.ReactElement
 }
 
-export default function PublicationFeed({ feed, onRefresh, isRefreshing }: Props) {
-	const { isTablet, isXSmall, safeWidth: width } = useDisplay()
+export default function PublicationFeed({
+	feed,
+	onRefresh,
+	isRefreshing,
+	ListHeaderComponent,
+}: Props) {
 	const {
 		activeServer: { id: serverID },
 	} = useActiveServer()
 	const { sdk } = useSDK()
 
 	const feedURL = feed.links?.find((link) => link.rel === 'self')?.href || ''
-	const [pageSize, setPageSize] = useState(() => Math.max(10, feed.publications.length))
+	const [pageSize, setPageSize] = useState(() => feed.metadata.itemsPerPage || 20)
 
-	const { data, hasNextPage, fetchNextPage } = useInfiniteQuery(
-		[sdk.opds.keys.feed, feedURL, 'paged', pageSize],
-		({ pageParam = 1 }) =>
-			sdk.opds.feed(feedURL, {
-				page: pageParam,
-				page_size: pageSize,
-			}),
-		{
-			keepPreviousData: true,
-			getNextPageParam: (lastPage) => {
-				const metadata = lastPage.metadata
-				const numberOfItems = metadata.numberOfItems || feed.metadata.numberOfItems
-				const numberOfPages = metadata.itemsPerPage || feed.metadata.itemsPerPage
-				if (!numberOfPages || !numberOfItems) return undefined
+	// Note: We cannot assume indexing of page query params, and I don't see it definfed in
+	// the spec, so we just have to rely on the next link
+	const getNextPageParam = (lastPage: OPDSFeed) => {
+		const links = lastPage.links || []
+		const nextLink = links.find((link) => link.rel === 'next')
+		if (nextLink) {
+			return nextLink.href
+		}
+		return undefined
+	}
 
-				const currentPage = metadata.currentPage || 1
-
-				const pagesRemaining = Math.ceil(numberOfItems / numberOfPages) - currentPage
-				if (pagesRemaining > 0) {
-					return currentPage + 1
-				}
-				return undefined
-			},
-			enabled: !!feedURL,
+	const { data, hasNextPage, fetchNextPage } = useInfiniteQuery({
+		initialPageParam: feedURL,
+		queryKey: [sdk.opds.keys.feed, feedURL, 'paged', pageSize],
+		queryFn: ({ pageParam = feedURL }) => {
+			return sdk.opds.feed(pageParam)
 		},
-	)
+		placeholderData: keepPreviousData,
+		getNextPageParam,
+		enabled: !!feedURL,
+	})
 
 	const firstPageSize = useMemo(() => data?.pages[0]?.metadata?.itemsPerPage, [data])
 	useEffect(() => {
@@ -71,113 +70,55 @@ export default function PublicationFeed({ feed, onRefresh, isRefreshing }: Props
 		}
 	}, [hasNextPage, fetchNextPage])
 
-	const router = useRouter()
-
-	// Each item will be height 150 OR 200 on tablets, plus up to 2 lines of text.
-	// We want to fill the width of the screen as best as possible. So:
-	const itemWidth = useMemo(() => {
-		// isTablet ? 200 * 0.665 : 150 * 0.665
-		if (isTablet) {
-			return 200 * 0.665
-		} else if (isXSmall) {
-			return width / 2
-		} else {
-			return 150 * 0.665
-		}
-	}, [isTablet, isXSmall, width])
-	const itemHeight = useMemo(() => {
-		if (isTablet) {
-			return 200
-		} else if (isXSmall) {
-			return (width * 2) / 3 - 1
-		} else {
-			return 150
-		}
-	}, [isTablet, isXSmall, width])
-
-	const itemsPerRow = Math.floor(width / itemWidth)
-	const availableSpaceX = width - itemsPerRow * itemWidth
-
-	// TODO: fix on xsmall, looks poopy
+	const { numColumns, paddingHorizontal } = useGridItemSize()
 
 	const publications = data?.pages.flatMap((page) => page.publications) || feed.publications
+
+	const renderItem = useCallback(
+		({ item: publication }: { item: (typeof publications)[number] }) => {
+			const thumbnailURL = getPublicationThumbnailURL(publication, sdk.rootURL)
+			const selfURL = publication.links?.find((link) => link.rel === 'self')?.href
+
+			if (!thumbnailURL) return null
+
+			return (
+				<View className="w-full items-center">
+					<GridImageItem
+						uri={thumbnailURL}
+						title={publication.metadata.title}
+						href={{
+							pathname: '/opds/[id]/publication',
+							params: {
+								id: serverID,
+								url: selfURL ? resolveUrl(selfURL, sdk.rootURL) : undefined,
+							},
+						}}
+					/>
+				</View>
+			)
+		},
+		[serverID, sdk.rootURL],
+	)
 
 	if (!publications.length) return null
 
 	return (
-		<View className="flex-1 gap-4">
-			<FeedTitle feed={feed} className="justify-center px-6" />
-
-			<FlatGrid
-				itemDimension={itemWidth}
+		<SafeAreaView style={{ flex: 1 }} edges={['left', 'right']}>
+			<FlashList
 				data={publications}
-				fixed
-				spacing={availableSpaceX / itemsPerRow}
-				renderItem={({ item: publication }) => {
-					const thumbnailURL = getPublicationThumbnailURL(publication)
-					const selfURL = publication.links?.find((link) => link.rel === 'self')?.href
-
-					return (
-						<Pressable
-							onPress={() =>
-								selfURL
-									? router.push({
-											pathname: '/opds/[id]/publication',
-											params: {
-												id: serverID,
-												url: selfURL,
-											},
-										})
-									: null
-							}
-						>
-							{({ pressed }) => (
-								<View
-									className={cn('xs:items-center flex', {
-										'opacity-90': pressed,
-										'py-1': isXSmall,
-									})}
-								>
-									<View className="relative aspect-[2/3] overflow-hidden rounded-lg">
-										<Image
-											className="z-0"
-											source={{
-												uri: thumbnailURL,
-												headers: {
-													Authorization: sdk.authorizationHeader,
-												},
-											}}
-											contentFit="scale-down"
-											style={{
-												height: itemHeight,
-												width: itemWidth,
-											}}
-										/>
-									</View>
-
-									<View
-										style={{
-											maxWidth: isTablet ? 200 * 0.665 : 150 * 0.665,
-										}}
-									>
-										<Text className="xs:text-center mt-2 line-clamp-2 text-sm tablet:text-sm">
-											{publication.metadata.title}
-										</Text>
-									</View>
-								</View>
-							)}
-						</Pressable>
-					)
+				renderItem={renderItem}
+				contentContainerStyle={{
+					paddingVertical: 16,
+					paddingHorizontal: paddingHorizontal,
 				}}
-				keyExtractor={(item) => item.metadata.title}
+				numColumns={numColumns}
+				onEndReachedThreshold={ON_END_REACHED_THRESHOLD}
 				onEndReached={onEndReached}
-				onEndReachedThreshold={0.75}
-				refreshControl={
-					onRefresh ? (
-						<RefreshControl refreshing={isRefreshing || false} onRefresh={onRefresh} />
-					) : undefined
-				}
+				contentInsetAdjustmentBehavior="always"
+				ListHeaderComponent={ListHeaderComponent}
+				ListHeaderComponentStyle={{ paddingBottom: 16, marginHorizontal: -paddingHorizontal }}
+				refreshControl={<RefreshControl refreshing={Boolean(isRefreshing)} onRefresh={onRefresh} />}
 			/>
-		</View>
+		</SafeAreaView>
 	)
 }

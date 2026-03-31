@@ -1,15 +1,14 @@
-import { useQuery, useSDK } from '@stump/client'
+import { useSDK, useSuspenseGraphQL } from '@stump/client'
 import { Badge, Card, cn, Text } from '@stump/components'
+import { ApiKeyTableQuery, graphql } from '@stump/graphql'
 import { useLocaleContext } from '@stump/i18n'
-import { APIKey } from '@stump/sdk'
 import {
 	createColumnHelper,
 	flexRender,
 	getCoreRowModel,
 	useReactTable,
 } from '@tanstack/react-table'
-import dayjs from 'dayjs'
-import relativeTime from 'dayjs/plugin/relativeTime'
+import { formatDistanceToNow, intlFormat, isValid, parseISO } from 'date-fns'
 import { KeyRound, Slash } from 'lucide-react'
 import { useMemo, useState } from 'react'
 
@@ -19,13 +18,33 @@ import APIKeyActionMenu from './APIKeyActionMenu'
 import APIKeyInspector from './APIKeyInspector'
 import DeleteAPIKeyConfirmModal from './DeleteAPIKeyConfirmModal'
 
-dayjs.extend(relativeTime)
+const query = graphql(`
+	query APIKeyTable {
+		apiKeys {
+			id
+			name
+			permissions {
+				__typename
+				... on UserPermissionStruct {
+					value
+				}
+			}
+			lastUsedAt
+			expiresAt
+			createdAt
+		}
+	}
+`)
+
+export type APIKey = ApiKeyTableQuery['apiKeys'][number]
 
 export default function APIKeyTable() {
 	const { sdk } = useSDK()
-	const { data: apiKeys } = useQuery([sdk.apiKey.keys.get], () => sdk.apiKey.get(), {
-		suspense: true,
-	})
+
+	const {
+		data: { apiKeys },
+	} = useSuspenseGraphQL(query, sdk.cacheKey('apiKeys'))
+
 	const { t } = useLocaleContext()
 
 	const [deletingKey, setDeletingKey] = useState<APIKey | null>(null)
@@ -57,54 +76,84 @@ export default function APIKeyTable() {
 						<Badge
 							variant="primary"
 							size="sm"
-							className={cn(
-								'flex items-center justify-between space-x-1 pl-2 pr-1',
-
-								{ 'pr-2': permissions === 'inherit' },
-							)}
+							className={cn('flex items-center justify-between space-x-1 pl-2 pr-1', {
+								'pr-2': permissions.__typename === 'InheritPermissionStruct',
+							})}
 						>
-							<span>{t(getFieldKey(permissions === 'inherit' ? 'inherited' : 'explicit'))}</span>
-							{permissions !== 'inherit' && (
+							<span>
+								{t(
+									getFieldKey(
+										permissions.__typename === 'InheritPermissionStruct' ? 'inherited' : 'explicit',
+									),
+								)}
+							</span>
+							{permissions.__typename !== 'InheritPermissionStruct' && (
 								<span className="flex h-5 w-5 items-center justify-center rounded-md bg-fill-brand-secondary">
-									{permissions.length}
+									{permissions.value.length}
 								</span>
 							)}
 						</Badge>
 					</div>
 				),
 			}),
-			columnHelper.accessor('last_used_at', {
+			columnHelper.accessor('lastUsedAt', {
 				header: () => (
 					<Text size="sm" variant="secondary">
 						{t(getFieldKey('last_used'))}
 					</Text>
 				),
 				cell: ({ getValue }) => {
-					const parsed = dayjs(getValue())
+					const value = getValue()
+					const parsed = value ? parseISO(value) : null
+					const valid = parsed && isValid(parsed)
 					return (
 						<Text
 							size="sm"
-							title={parsed.isValid() ? parsed.format('LLL') : t('common.notUsedYet')}
+							title={
+								valid
+									? intlFormat(parsed, {
+											month: 'long',
+											day: 'numeric',
+											year: 'numeric',
+											hour: 'numeric',
+											minute: '2-digit',
+										})
+									: t('common.notUsedYet')
+							}
 						>
-							{parsed.isValid() ? parsed.fromNow() : t('common.never')}
+							{valid ? formatDistanceToNow(parsed, { addSuffix: true }) : t('common.never')}
 						</Text>
 					)
 				},
 			}),
-			columnHelper.accessor('expires_at', {
+			columnHelper.accessor('expiresAt', {
 				header: () => (
 					<Text size="sm" variant="secondary">
 						{t(getFieldKey('expiration'))}
 					</Text>
 				),
 				cell: ({ getValue }) => {
-					const parsed = dayjs(getValue())
+					const value = getValue()
+					const parsed = value ? parseISO(value) : null
+					const valid = parsed && isValid(parsed)
 					return (
 						<Text
 							size="sm"
-							title={parsed.isValid() ? parsed.format('LLL') : t(getKey('noExpiration'))}
+							title={
+								valid
+									? intlFormat(parsed, {
+											month: 'long',
+											day: 'numeric',
+											year: 'numeric',
+											hour: 'numeric',
+											minute: '2-digit',
+										})
+									: t(getKey('noExpiration'))
+							}
 						>
-							{parsed.isValid() ? parsed.format('LL') : 'Never'}
+							{valid
+								? intlFormat(parsed, { month: 'long', day: 'numeric', year: 'numeric' })
+								: 'Never'}
 						</Text>
 					)
 				},

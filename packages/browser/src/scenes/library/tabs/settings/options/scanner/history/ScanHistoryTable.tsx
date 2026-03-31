@@ -1,7 +1,7 @@
-import { useQuery, useSDK } from '@stump/client'
+import { useSDK, useSuspenseGraphQL } from '@stump/client'
 import { Badge, Button, Card, Dropdown, Text } from '@stump/components'
+import { graphql, ScanHistoryTableQuery } from '@stump/graphql'
 import { useLocaleContext } from '@stump/i18n'
-import { LibraryScanRecord } from '@stump/sdk'
 import {
 	createColumnHelper,
 	flexRender,
@@ -9,8 +9,7 @@ import {
 	getPaginationRowModel,
 	useReactTable,
 } from '@tanstack/react-table'
-import dayjs from 'dayjs'
-import relativeTime from 'dayjs/plugin/relativeTime'
+import { intlFormat, isValid, parseISO } from 'date-fns'
 import { Database, Ellipsis, Slash } from 'lucide-react'
 import { useMemo, useState } from 'react'
 
@@ -20,21 +19,49 @@ import { getCommonPinningStyles } from '@/components/table/Table'
 import { useLibraryManagement } from '../../../context'
 import ScanRecordInspector from './ScanRecordInspector'
 
-dayjs.extend(relativeTime)
+const query = graphql(`
+	query ScanHistoryTable($id: ID!) {
+		libraryById(id: $id) {
+			id
+			scanHistory {
+				id
+				jobId
+				timestamp
+				options
+			}
+		}
+	}
+`)
+
+export type CustomVisit = { regenMeta: boolean; regenHashes: boolean }
+
+export type ScanConfig = null | { forceRebuild: boolean } | CustomVisit
+
+/**
+ * The override options for a scan job. These options are used to override the default behavior, which generally
+ * means that the scanner will visit books it otherwise would not. How much extra work is done depends on the
+ * specific options.
+ */
+export type ScanOptions = { config?: ScanConfig }
+
+export type LibraryScanRecord = Omit<
+	NonNullable<ScanHistoryTableQuery['libraryById']>['scanHistory'][number],
+	'libraryId' | 'options'
+> & {
+	options?: ScanOptions | null
+}
 
 export default function ScanHistoryTable() {
-	const { sdk } = useSDK()
 	const {
 		library: { id },
 		scan,
 	} = useLibraryManagement()
-	const { data: scanHistory } = useQuery(
-		[sdk.library.keys.scanHistory, id],
-		() => sdk.library.scanHistory(id),
-		{
-			suspense: true,
-		},
-	)
+	const { sdk } = useSDK()
+	const {
+		data: { libraryById },
+	} = useSuspenseGraphQL(query, sdk.cacheKey('scanHistory', [id]), { id })
+	const scanHistory = libraryById?.scanHistory || []
+
 	const { t } = useLocaleContext()
 
 	const [inspectingRecord, setInspectingRecord] = useState<LibraryScanRecord | null>(null)
@@ -50,12 +77,21 @@ export default function ScanHistoryTable() {
 					</Text>
 				),
 				cell: ({ getValue }) => {
-					const parsed = dayjs(getValue())
-					if (!parsed.isValid()) return null
+					const parsed =
+						typeof getValue() === 'string' ? parseISO(getValue()) : new Date(getValue())
+					if (!isValid(parsed)) return null
+
+					const formatted = intlFormat(parsed, {
+						month: 'long',
+						day: 'numeric',
+						year: 'numeric',
+						hour: 'numeric',
+						minute: '2-digit',
+					})
 
 					return (
-						<Text size="sm" title={parsed.format('LLL')}>
-							{parsed.format('LLL')}
+						<Text size="sm" title={formatted}>
+							{formatted}
 						</Text>
 					)
 				},

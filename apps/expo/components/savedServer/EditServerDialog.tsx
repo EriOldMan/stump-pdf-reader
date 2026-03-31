@@ -2,12 +2,20 @@ import { BottomSheetModal } from '@gorhom/bottom-sheet'
 import { useCallback, useEffect, useMemo, useRef } from 'react'
 import { View } from 'react-native'
 import { useSharedValue } from 'react-native-reanimated'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
+import { useColors } from '~/lib/constants'
 import { useColorScheme } from '~/lib/useColorScheme'
 import { CreateServer, SavedServerWithConfig } from '~/stores/savedServer'
 
-import { BottomSheet, Heading, Text } from '../ui'
-import AddOrEditServerForm from './AddOrEditServerForm'
+import { BottomSheet } from '../ui'
+import AddOrEditServerForm, {
+	AddOrEditServerSchema,
+	transformFormData,
+} from './AddOrEditServerForm'
+
+// TODO: Refactor to true sheet, but expect keyboard aware issues:
+// https://github.com/lodev09/react-native-true-sheet/issues/391
 
 type Props = {
 	editingServer: SavedServerWithConfig | null
@@ -17,7 +25,7 @@ type Props = {
 
 export default function EditServerDialog({ editingServer, onClose, onSubmit }: Props) {
 	const ref = useRef<BottomSheetModal | null>(null)
-	const snapPoints = useMemo(() => ['95%'], [])
+	const snapPoints = useMemo(() => ['100%'], [])
 	const animatedIndex = useSharedValue<number>(0)
 	const animatedPosition = useSharedValue<number>(0)
 
@@ -33,6 +41,13 @@ export default function EditServerDialog({ editingServer, onClose, onSubmit }: P
 		[isOpen, onClose],
 	)
 
+	const handleSubmit = useCallback(
+		(data: AddOrEditServerSchema) => {
+			onSubmit(transformFormData(data))
+		},
+		[onSubmit],
+	)
+
 	useEffect(() => {
 		if (editingServer) {
 			ref.current?.present()
@@ -41,15 +56,27 @@ export default function EditServerDialog({ editingServer, onClose, onSubmit }: P
 		}
 	}, [editingServer])
 
+	const insets = useSafeAreaInsets()
+	const colors = useColors()
+
 	return (
 		<>
 			<BottomSheet.Modal
 				ref={ref}
 				index={snapPoints.length - 1}
 				snapPoints={snapPoints}
+				topInset={insets.top}
+				enableDynamicSizing={false}
 				onChange={handleChange}
 				open={isOpen}
-				backgroundComponent={(props) => <View {...props} className="rounded-t-xl bg-background" />}
+				backgroundStyle={{
+					borderRadius: 24,
+					borderCurve: 'continuous',
+					overflow: 'hidden',
+					borderWidth: 1,
+					borderColor: colors.edge.DEFAULT,
+					backgroundColor: colors.background.DEFAULT,
+				}}
 				handleIndicatorStyle={{ backgroundColor: colorScheme === 'dark' ? '#333' : '#ccc' }}
 				handleComponent={(props) => (
 					<BottomSheet.Handle
@@ -60,18 +87,16 @@ export default function EditServerDialog({ editingServer, onClose, onSubmit }: P
 					/>
 				)}
 			>
-				<BottomSheet.ScrollView className="flex-1 bg-background p-6">
+				<BottomSheet.ScrollView className="flex-1 p-6">
 					<View className="gap-4">
-						<View>
-							<Heading size="lg" className="font-bold leading-6">
-								Edit server
-							</Heading>
-							<Text className="text-base text-foreground-muted">
-								Make changes to the server configuration
-							</Text>
-						</View>
-
-						<AddOrEditServerForm editingServer={editingServer || undefined} onSubmit={onSubmit} />
+						<AddOrEditServerForm
+							editingServer={editingServer || undefined}
+							onSubmit={handleSubmit}
+							onClose={() => {
+								ref.current?.dismiss()
+								onClose()
+							}}
+						/>
 					</View>
 				</BottomSheet.ScrollView>
 			</BottomSheet.Modal>

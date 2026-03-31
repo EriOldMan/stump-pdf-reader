@@ -2,8 +2,10 @@
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type Any = any
 
+// TODO: Rename all the `primitives.tsx` files to `base-js.tsx` or similar for obv reasons against using that language
+
 export { Accordion } from './accordion'
-export { Alert } from './alert'
+export { Alert, AlertDescription, AlertTitle } from './alert'
 export { Badge, type BadgeProps } from './badge'
 export { Breadcrumbs, type BreadcrumbsProps } from './breadcrumbs'
 export {
@@ -33,6 +35,8 @@ export {
 	Input,
 	PasswordInput,
 	RawSwitch,
+	RawTextArea,
+	type RawTextAreaProps,
 	Switch,
 	type SwitchProps,
 	TextArea,

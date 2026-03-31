@@ -1,11 +1,12 @@
 import { Badge, Label, Sheet, Text } from '@stump/components'
 import { useLocaleContext } from '@stump/i18n'
-import { APIKey } from '@stump/sdk'
-import dayjs from 'dayjs'
+import { intlFormat, isValid, parseISO } from 'date-fns'
 import { KeyRound, Sparkles } from 'lucide-react'
 
 import { useAppContext } from '@/context'
 import { useCurrentOrPrevious } from '@/hooks/useCurrentOrPrevious'
+
+import { APIKey } from './APIKeyTable'
 
 type Props = {
 	apiKey: APIKey | null
@@ -18,10 +19,24 @@ export default function APIKeyInspector({ apiKey, onClose }: Props) {
 
 	const displayedData = useCurrentOrPrevious(apiKey)
 
-	const expiration = dayjs(displayedData?.expires_at)
-	const lastUsedAt = dayjs(displayedData?.last_used_at)
-	const createdAt = dayjs(displayedData?.created_at)
-	const isAllPermissions = user.is_server_owner && displayedData?.permissions === 'inherit'
+	const formatDate = (dateStr?: string | null) => {
+		if (!dateStr) return null
+		const date = typeof dateStr === 'string' ? parseISO(dateStr) : new Date(dateStr)
+		if (!isValid(date)) return null
+		return intlFormat(date, {
+			month: 'long',
+			day: 'numeric',
+			year: 'numeric',
+			hour: 'numeric',
+			minute: '2-digit',
+		})
+	}
+
+	const expirationFormatted = formatDate(displayedData?.expiresAt)
+	const lastUsedAtFormatted = formatDate(displayedData?.lastUsedAt)
+	const createdAtFormatted = formatDate(displayedData?.createdAt)
+	const isAllPermissions =
+		user.isServerOwner && displayedData?.permissions.__typename === 'InheritPermissionStruct'
 
 	const renderPermissions = () => {
 		if (isAllPermissions) {
@@ -44,7 +59,9 @@ export default function APIKeyInspector({ apiKey, onClose }: Props) {
 		}
 
 		const permissions =
-			displayedData?.permissions === 'inherit' ? user.permissions : displayedData?.permissions || []
+			displayedData?.permissions.__typename === 'InheritPermissionStruct'
+				? user.permissions || []
+				: displayedData?.permissions.value || []
 
 		return (
 			<div
@@ -91,22 +108,18 @@ export default function APIKeyInspector({ apiKey, onClose }: Props) {
 
 				<div className="px-4 py-2" data-testid="expire-meta">
 					<Label className="text-foreground-muted">{t(getSharedKey('fields.expiration'))}</Label>
-					<Text size="sm">
-						{expiration.isValid() ? expiration.format('LLL') : t('common.never')}
-					</Text>
+					<Text size="sm">{expirationFormatted ?? t('common.never')}</Text>
 				</div>
 
 				<div className="my-2 bg-background-surface px-4 py-2" data-testid="last_used-meta">
 					<Label className="text-foreground-muted">{t(getSharedKey('fields.last_used'))}</Label>
-					<Text size="sm">
-						{lastUsedAt.isValid() ? lastUsedAt.format('LLL') : t('common.never')}
-					</Text>
+					<Text size="sm">{lastUsedAtFormatted ?? t('common.never')}</Text>
 				</div>
 
-				{createdAt.isValid() && (
+				{createdAtFormatted && (
 					<div className="px-4 py-2" data-testid="created-meta">
 						<Label className="text-foreground-muted">{t(getSharedKey('fields.created'))}</Label>
-						<Text size="sm">{createdAt.format('LLL')}</Text>
+						<Text size="sm">{createdAtFormatted}</Text>
 					</div>
 				)}
 			</div>

@@ -81,4 +81,22 @@ export const dark = {
 			secondary: '#1B1B1E',
 		},
 	},
+	scrollbar: {
+		DEFAULT: '#161719',
+		thumb: {
+			DEFAULT: 'hsla(0, 0%, 100%, 0.4)',
+			hover: 'hsla(0, 0%, 100%, 0.3)',
+		},
+	},
+	thumbnail: {
+		border: 'rgba(233, 234, 235, 0.10)',
+		placeholder: '#1F2123',
+		stack: {
+			series: '#3D3A3A',
+			library: {
+				start: '#2E2B2B',
+				end: '#3D3A3A',
+			},
+		},
+	},
 } satisfies StumpTheme

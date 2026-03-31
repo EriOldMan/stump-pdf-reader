@@ -61,8 +61,7 @@ export const light = {
 		DEFAULT: '#000000',
 		brand: '#C48259',
 		disabled: '#93979D',
-		muted: '#414347',
-		// #5B5F65 OR #7D828A
+		muted: '#5B5F65',
 		'on-inverse': dark.foreground.DEFAULT,
 		'on-black': {
 			DEFAULT: '#E9EAEB',
@@ -81,6 +80,24 @@ export const light = {
 			DEFAULT: '#F6F6F7',
 			hover: '#EBEBED',
 			secondary: '#F1F1F2',
+		},
+	},
+	scrollbar: {
+		DEFAULT: '#F2F2F3',
+		thumb: {
+			DEFAULT: 'hsla(0, 0%, 0%, 0.3)',
+			hover: 'hsla(0, 0%, 0%, 0.5)',
+		},
+	},
+	thumbnail: {
+		border: 'rgba(31, 33, 35, 0.10)',
+		placeholder: '#F2F2F2',
+		stack: {
+			series: '#d4b7a7',
+			library: {
+				start: '#ad9282',
+				end: '#d4b7a7',
+			},
 		},
 	},
 } satisfies StumpTheme
