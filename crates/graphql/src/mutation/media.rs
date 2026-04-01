@@ -284,16 +284,35 @@ impl MediaMutation {
 			.await?
 			.ok_or("Media not found")?;
 
-		let affected_sessions = reading_session::Entity::delete_many()
+		let txn = conn.begin().await?;
+
+		let affected_progress = reading_session::Entity::delete_many()
 			.filter(
 				reading_session::Column::MediaId
 					.eq(model.media.id.clone())
 					.and(reading_session::Column::UserId.eq(user.id.clone())),
 			)
-			.exec(conn)
+			.exec(&txn)
 			.await?
 			.rows_affected;
-		tracing::debug!(affected_sessions, "Deleted user reading sessions for media");
+
+		let affected_history = finished_reading_session::Entity::delete_many()
+			.filter(
+				finished_reading_session::Column::MediaId
+					.eq(model.media.id.clone())
+					.and(finished_reading_session::Column::UserId.eq(user.id.clone())),
+			)
+			.exec(&txn)
+			.await?
+			.rows_affected;
+
+		txn.commit().await?;
+
+		tracing::debug!(
+			affected_progress,
+			affected_history,
+			"Deleted user reading progress and history for media"
+		);
 
 		// Note: We return the full node for cache invalidation purposes
 		Ok(Media::from(model))

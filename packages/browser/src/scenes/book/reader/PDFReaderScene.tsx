@@ -1,4 +1,5 @@
-import { invalidateQueries, useSDK } from '@stump/client'
+import { useSDK } from '@stump/client'
+import { useQueryClient } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import { useParams } from 'react-router'
 
@@ -10,15 +11,16 @@ import NativePDFViewer from '@/components/readers/pdf/NativePDFViewer'
 export default function PDFReaderScene() {
 	const { id } = useParams()
 	const { sdk } = useSDK()
+	const queryClient = useQueryClient()
 
 	useEffect(() => {
 		return () => {
-			invalidateQueries({ exact: false, keys: [sdk.media.keys.inProgress] })
 			if (id) {
-				invalidateQueries({ exact: false, keys: [sdk.media.keys.getByID, id] })
+				queryClient.invalidateQueries({ queryKey: ['bookOverview', id] })
 			}
+			queryClient.invalidateQueries({ queryKey: ['inProgress'] })
 		}
-	}, [sdk.media, id])
+	}, [sdk.media, id, queryClient])
 
 	if (!id) {
 		throw new Error('Media ID is required')

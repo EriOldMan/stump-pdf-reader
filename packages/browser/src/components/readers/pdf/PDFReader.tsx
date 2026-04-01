@@ -21,7 +21,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
 ).toString()
 
 const mutation = graphql(`
-	mutation PDFReaderUpdateProgress($id: ID!, $input: MediaProgressInput!) {
+	mutation UpdateReadProgress($id: ID!, $input: MediaProgressInput!) {
 		updateMediaProgress(id: $id, input: $input) {
 			__typename
 		}
@@ -153,7 +153,17 @@ export default function PDFReader({ id, src, initialPage = 1 }: Props) {
 	const [scale, setScale] = useState(1.5)
 	const [isLoading, setIsLoading] = useState(true)
 
-	const { mutate: updateProgress } = useGraphQLMutation(mutation)
+	const { mutate: updateProgress } = useGraphQLMutation(mutation, {
+		onSuccess: () => {
+			// console.debug('PDFReader: Progress update successful')
+		},
+		onError: (error: any) => {
+			console.error('PDFReader: Failed to update progress:', error)
+			if (error?.response?.data) {
+				console.error('Server Response:', error.response.data)
+			}
+		},
+	})
 	const navigate = useNavigate()
 	const location = useLocation()
 
@@ -264,7 +274,7 @@ export default function PDFReader({ id, src, initialPage = 1 }: Props) {
 
 	const onPageRenderSuccess = useCallback(
 		(pageNum: number) => {
-			updateProgress({ id, input: { page: pageNum } })
+			updateProgress({ id, input: { paged: { page: pageNum } } })
 		},
 		[id, updateProgress],
 	)

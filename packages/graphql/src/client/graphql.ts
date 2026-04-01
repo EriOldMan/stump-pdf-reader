@@ -4325,6 +4325,14 @@ export type DeleteBookmarkByEpubcfiMutationVariables = Exact<{
 
 export type DeleteBookmarkByEpubcfiMutation = { __typename?: 'Mutation', deleteBookmarkByEpubcfi: { __typename: 'Bookmark' } };
 
+export type PdfReaderUpdateProgressMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+  input: MediaProgressInput;
+}>;
+
+
+export type PdfReaderUpdateProgressMutation = { __typename?: 'Mutation', updateMediaProgress: { __typename: 'ActiveReadingSession' } | { __typename: 'FinishedReadingSession' } };
+
 export type SeriesBooksAlphabetQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
@@ -4372,13 +4380,6 @@ export type BookActionMenuDeleteSessionMutationVariables = Exact<{
 
 
 export type BookActionMenuDeleteSessionMutation = { __typename?: 'Mutation', deleteMediaProgress: { __typename: 'Media' } };
-
-export type BookActionMenuDeleteHistoryMutationVariables = Exact<{
-  id: Scalars['ID']['input'];
-}>;
-
-
-export type BookActionMenuDeleteHistoryMutation = { __typename?: 'Mutation', deleteMediaReadHistory: { __typename: 'Media' } };
 
 export type BookFileInformationFragment = { __typename?: 'Media', id: string, size: number, extension: string, hash?: string | null, relativeLibraryPath: string } & { ' $fragmentName'?: 'BookFileInformationFragment' };
 
@@ -7766,6 +7767,13 @@ export const DeleteBookmarkByEpubcfiDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<DeleteBookmarkByEpubcfiMutation, DeleteBookmarkByEpubcfiMutationVariables>;
+export const PdfReaderUpdateProgressDocument = new TypedDocumentString(`
+    mutation PDFReaderUpdateProgress($id: ID!, $input: MediaProgressInput!) {
+  updateMediaProgress(id: $id, input: $input) {
+    __typename
+  }
+}
+    `) as unknown as TypedDocumentString<PdfReaderUpdateProgressMutation, PdfReaderUpdateProgressMutationVariables>;
 export const SeriesBooksAlphabetDocument = new TypedDocumentString(`
     query SeriesBooksAlphabet($id: ID!) {
   seriesById(id: $id) {
@@ -7880,13 +7888,6 @@ export const BookActionMenuDeleteSessionDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<BookActionMenuDeleteSessionMutation, BookActionMenuDeleteSessionMutationVariables>;
-export const BookActionMenuDeleteHistoryDocument = new TypedDocumentString(`
-    mutation BookActionMenuDeleteHistory($id: ID!) {
-  deleteMediaReadHistory(id: $id) {
-    __typename
-  }
-}
-    `) as unknown as TypedDocumentString<BookActionMenuDeleteHistoryMutation, BookActionMenuDeleteHistoryMutationVariables>;
 export const BookLibrarySeriesLinksDocument = new TypedDocumentString(`
     query BookLibrarySeriesLinks($id: ID!) {
   seriesById(id: $id) {

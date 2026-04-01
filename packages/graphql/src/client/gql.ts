@@ -111,6 +111,7 @@ type Documents = {
     "\n\tmutation UpdateEpubProgress($id: ID!, $input: MediaProgressInput!) {\n\t\tupdateMediaProgress(id: $id, input: $input) {\n\t\t\t__typename\n\t\t\t... on ActiveReadingSession {\n\t\t\t\tpercentageCompleted\n\t\t\t\tepubcfi\n\t\t\t\tpage\n\t\t\t\telapsedSeconds\n\t\t\t}\n\t\t}\n\t}\n": typeof types.UpdateEpubProgressDocument,
     "\n\tmutation CreateBookmark($input: BookmarkInput!) {\n\t\tcreateBookmark(input: $input) {\n\t\t\t__typename\n\t\t}\n\t}\n": typeof types.CreateBookmarkDocument,
     "\n\tmutation DeleteBookmarkByEpubcfi($epubcfi: String!) {\n\t\tdeleteBookmarkByEpubcfi(epubcfi: $epubcfi) {\n\t\t\t__typename\n\t\t}\n\t}\n": typeof types.DeleteBookmarkByEpubcfiDocument,
+    "\n\tmutation PDFReaderUpdateProgress($id: ID!, $input: MediaProgressInput!) {\n\t\tupdateMediaProgress(id: $id, input: $input) {\n\t\t\t__typename\n\t\t}\n\t}\n": typeof types.PdfReaderUpdateProgressDocument,
     "\n\tquery SeriesBooksAlphabet($id: ID!) {\n\t\tseriesById(id: $id) {\n\t\t\tmediaAlphabet\n\t\t}\n\t}\n": typeof types.SeriesBooksAlphabetDocument,
     "\n\tfragment SeriesMetadataEditor on SeriesMetadata {\n\t\tageRating\n\t\tbooktype\n\t\tcharacters\n\t\tcollects {\n\t\t\tseries\n\t\t\tcomicid\n\t\t\tissueid\n\t\t\tissues\n\t\t}\n\t\tcomicImage\n\t\tcomicid\n\t\tdescriptionFormatted\n\t\tgenres\n\t\timprint\n\t\tlinks\n\t\tmetaType\n\t\tpublicationRun\n\t\tpublisher\n\t\tstatus\n\t\tsummary\n\t\ttitle\n\t\ttotalIssues\n\t\tvolume\n\t\twriters\n\t\tyear\n\t}\n": typeof types.SeriesMetadataEditorFragmentDoc,
     "\n\tmutation UpdateSeriesMetadata($id: ID!, $input: SeriesMetadataInput!) {\n\t\tupdateSeriesMetadata(id: $id, input: $input) {\n\t\t\tmetadata {\n\t\t\t\t...SeriesMetadataEditor\n\t\t\t}\n\t\t}\n\t}\n": typeof types.UpdateSeriesMetadataDocument,
@@ -118,7 +119,6 @@ type Documents = {
     "\n\tmutation UsePreferences($input: UpdateUserPreferencesInput!) {\n\t\tupdateViewerPreferences(input: $input) {\n\t\t\t__typename\n\t\t}\n\t}\n": typeof types.UsePreferencesDocument,
     "\n\tmutation BookActionMenuComplete($id: ID!, $isComplete: Boolean!, $page: Int) {\n\t\tmarkMediaAsComplete(id: $id, isComplete: $isComplete, page: $page) {\n\t\t\tcompletedAt\n\t\t}\n\t}\n": typeof types.BookActionMenuCompleteDocument,
     "\n\tmutation BookActionMenuDeleteSession($id: ID!) {\n\t\tdeleteMediaProgress(id: $id) {\n\t\t\t__typename\n\t\t}\n\t}\n": typeof types.BookActionMenuDeleteSessionDocument,
-    "\n\tmutation BookActionMenuDeleteHistory($id: ID!) {\n\t\tdeleteMediaReadHistory(id: $id) {\n\t\t\t__typename\n\t\t}\n\t}\n": typeof types.BookActionMenuDeleteHistoryDocument,
     "\n\tfragment BookFileInformation on Media {\n\t\tid\n\t\tsize\n\t\textension\n\t\thash\n\t\trelativeLibraryPath\n\t}\n": typeof types.BookFileInformationFragmentDoc,
     "\n\tquery BookLibrarySeriesLinks($id: ID!) {\n\t\tseriesById(id: $id) {\n\t\t\tid\n\t\t\tresolvedName\n\t\t\tlibraryId\n\t\t}\n\t}\n": typeof types.BookLibrarySeriesLinksDocument,
     "\n\tfragment BookMetadata on Media {\n\t\tmetadata {\n\t\t\tageRating\n\t\t\tcharacters\n\t\t\tcolorists\n\t\t\tcoverArtists\n\t\t\teditors\n\t\t\tgenres\n\t\t\tinkers\n\t\t\tletterers\n\t\t\tlinks\n\t\t\tpencillers\n\t\t\tpublisher\n\t\t\tteams\n\t\t\twriters\n\t\t\tyear\n\t\t\tmonth\n\t\t\tday\n\t\t}\n\t}\n": typeof types.BookMetadataFragmentDoc,
@@ -342,6 +342,7 @@ const documents: Documents = {
     "\n\tmutation UpdateEpubProgress($id: ID!, $input: MediaProgressInput!) {\n\t\tupdateMediaProgress(id: $id, input: $input) {\n\t\t\t__typename\n\t\t\t... on ActiveReadingSession {\n\t\t\t\tpercentageCompleted\n\t\t\t\tepubcfi\n\t\t\t\tpage\n\t\t\t\telapsedSeconds\n\t\t\t}\n\t\t}\n\t}\n": types.UpdateEpubProgressDocument,
     "\n\tmutation CreateBookmark($input: BookmarkInput!) {\n\t\tcreateBookmark(input: $input) {\n\t\t\t__typename\n\t\t}\n\t}\n": types.CreateBookmarkDocument,
     "\n\tmutation DeleteBookmarkByEpubcfi($epubcfi: String!) {\n\t\tdeleteBookmarkByEpubcfi(epubcfi: $epubcfi) {\n\t\t\t__typename\n\t\t}\n\t}\n": types.DeleteBookmarkByEpubcfiDocument,
+    "\n\tmutation PDFReaderUpdateProgress($id: ID!, $input: MediaProgressInput!) {\n\t\tupdateMediaProgress(id: $id, input: $input) {\n\t\t\t__typename\n\t\t}\n\t}\n": types.PdfReaderUpdateProgressDocument,
     "\n\tquery SeriesBooksAlphabet($id: ID!) {\n\t\tseriesById(id: $id) {\n\t\t\tmediaAlphabet\n\t\t}\n\t}\n": types.SeriesBooksAlphabetDocument,
     "\n\tfragment SeriesMetadataEditor on SeriesMetadata {\n\t\tageRating\n\t\tbooktype\n\t\tcharacters\n\t\tcollects {\n\t\t\tseries\n\t\t\tcomicid\n\t\t\tissueid\n\t\t\tissues\n\t\t}\n\t\tcomicImage\n\t\tcomicid\n\t\tdescriptionFormatted\n\t\tgenres\n\t\timprint\n\t\tlinks\n\t\tmetaType\n\t\tpublicationRun\n\t\tpublisher\n\t\tstatus\n\t\tsummary\n\t\ttitle\n\t\ttotalIssues\n\t\tvolume\n\t\twriters\n\t\tyear\n\t}\n": types.SeriesMetadataEditorFragmentDoc,
     "\n\tmutation UpdateSeriesMetadata($id: ID!, $input: SeriesMetadataInput!) {\n\t\tupdateSeriesMetadata(id: $id, input: $input) {\n\t\t\tmetadata {\n\t\t\t\t...SeriesMetadataEditor\n\t\t\t}\n\t\t}\n\t}\n": types.UpdateSeriesMetadataDocument,
@@ -349,7 +350,6 @@ const documents: Documents = {
     "\n\tmutation UsePreferences($input: UpdateUserPreferencesInput!) {\n\t\tupdateViewerPreferences(input: $input) {\n\t\t\t__typename\n\t\t}\n\t}\n": types.UsePreferencesDocument,
     "\n\tmutation BookActionMenuComplete($id: ID!, $isComplete: Boolean!, $page: Int) {\n\t\tmarkMediaAsComplete(id: $id, isComplete: $isComplete, page: $page) {\n\t\t\tcompletedAt\n\t\t}\n\t}\n": types.BookActionMenuCompleteDocument,
     "\n\tmutation BookActionMenuDeleteSession($id: ID!) {\n\t\tdeleteMediaProgress(id: $id) {\n\t\t\t__typename\n\t\t}\n\t}\n": types.BookActionMenuDeleteSessionDocument,
-    "\n\tmutation BookActionMenuDeleteHistory($id: ID!) {\n\t\tdeleteMediaReadHistory(id: $id) {\n\t\t\t__typename\n\t\t}\n\t}\n": types.BookActionMenuDeleteHistoryDocument,
     "\n\tfragment BookFileInformation on Media {\n\t\tid\n\t\tsize\n\t\textension\n\t\thash\n\t\trelativeLibraryPath\n\t}\n": types.BookFileInformationFragmentDoc,
     "\n\tquery BookLibrarySeriesLinks($id: ID!) {\n\t\tseriesById(id: $id) {\n\t\t\tid\n\t\t\tresolvedName\n\t\t\tlibraryId\n\t\t}\n\t}\n": types.BookLibrarySeriesLinksDocument,
     "\n\tfragment BookMetadata on Media {\n\t\tmetadata {\n\t\t\tageRating\n\t\t\tcharacters\n\t\t\tcolorists\n\t\t\tcoverArtists\n\t\t\teditors\n\t\t\tgenres\n\t\t\tinkers\n\t\t\tletterers\n\t\t\tlinks\n\t\t\tpencillers\n\t\t\tpublisher\n\t\t\tteams\n\t\t\twriters\n\t\t\tyear\n\t\t\tmonth\n\t\t\tday\n\t\t}\n\t}\n": types.BookMetadataFragmentDoc,
@@ -864,6 +864,10 @@ export function graphql(source: "\n\tmutation DeleteBookmarkByEpubcfi($epubcfi: 
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+export function graphql(source: "\n\tmutation PDFReaderUpdateProgress($id: ID!, $input: MediaProgressInput!) {\n\t\tupdateMediaProgress(id: $id, input: $input) {\n\t\t\t__typename\n\t\t}\n\t}\n"): typeof import('./graphql').PdfReaderUpdateProgressDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 export function graphql(source: "\n\tquery SeriesBooksAlphabet($id: ID!) {\n\t\tseriesById(id: $id) {\n\t\t\tmediaAlphabet\n\t\t}\n\t}\n"): typeof import('./graphql').SeriesBooksAlphabetDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -889,10 +893,6 @@ export function graphql(source: "\n\tmutation BookActionMenuComplete($id: ID!, $
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n\tmutation BookActionMenuDeleteSession($id: ID!) {\n\t\tdeleteMediaProgress(id: $id) {\n\t\t\t__typename\n\t\t}\n\t}\n"): typeof import('./graphql').BookActionMenuDeleteSessionDocument;
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function graphql(source: "\n\tmutation BookActionMenuDeleteHistory($id: ID!) {\n\t\tdeleteMediaReadHistory(id: $id) {\n\t\t\t__typename\n\t\t}\n\t}\n"): typeof import('./graphql').BookActionMenuDeleteHistoryDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

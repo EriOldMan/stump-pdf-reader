@@ -5,6 +5,7 @@ import { Suspense, useCallback, useEffect, useMemo } from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
 import { ImageBasedReader } from '@/components/readers/imageBased'
+import PDFReader from '@/components/readers/pdf/PDFReader'
 import paths from '@/paths'
 
 import { ARCHIVE_EXTENSION, EBOOK_EXTENSION, PDF_EXTENSION } from '../../../utils/patterns'
@@ -176,6 +177,12 @@ function BookReaderScene({ book }: Props) {
 			}
 		}
 	}, [book, initialPage, readingMode, navigate, isStreaming, animatedReader])
+
+	const isPdf = search.get('isPdf') === 'true'
+
+	if (book.extension.match(PDF_EXTENSION) && isPdf) {
+		return <PDFReader id={book.id} src={sdk.media.downloadURL(book.id)} initialPage={initialPage} />
+	}
 
 	if (book.extension.match(ARCHIVE_EXTENSION) || book.extension.match(PDF_EXTENSION)) {
 		return (

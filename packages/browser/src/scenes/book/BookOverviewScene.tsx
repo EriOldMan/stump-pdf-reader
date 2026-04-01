@@ -96,7 +96,7 @@ export default function BookOverviewScene() {
 										href={paths.bookReader(media.id, {
 											isPdf: true,
 											isStreaming: false,
-											page: media.current_page || 1,
+											page: fragmentData.readProgress?.page || 1,
 										})}
 										title="Read with the native PDF viewer"
 										className="w-full md:w-auto"
